@@ -1,16 +1,24 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonContent,
+  IonHeader,
   IonIcon,
+  IonItem,
   IonLabel,
+  IonList,
+  IonMenu,
+  IonMenuToggle,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonTitle,
+  IonToggle,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, homeOutline, libraryOutline, searchOutline, square, triangle } from 'ionicons/icons';
+import { book, ellipse, flash, home, homeOutline, libraryOutline, person, searchOutline, settings, square, star, time, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import YourLibrary from './pages/YourLibrary';
@@ -34,6 +42,9 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Settings from './pages/Settings';
+import Account from './pages/Account';
+import New from './pages/New';
+import History from './pages/History';
 import PlayMusic from './pages/PlayMusic';
 
 setupIonicReact();
@@ -41,26 +52,42 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
+        <IonMenu contentId="main">
+          <IonHeader className="ion-padding">
+          </IonHeader>
+          <IonContent>
+            <IonList>
+              <IonMenuToggle>
+                <IonItem button routerLink="/account">
+                  <IonIcon icon={person}size="large" />
+                  <IonLabel className='menu'>Profile</IonLabel>
+                </IonItem>
+                <IonItem button routerLink="/new">
+                  <IonIcon icon={flash}size="large" />
+                  <IonLabel className='menu'>What's new</IonLabel>
+                </IonItem>
+                <IonItem button routerLink="/history">
+                  <IonIcon icon={time} size="large"/>
+                  <IonLabel className='menu'>Listening History</IonLabel>
+                </IonItem>
+                <IonItem button routerLink="/settings">
+                  <IonIcon icon={settings} size="large"/>
+                  <IonLabel className='menu'>Settings and privacy</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            </IonList>
+          </IonContent>
+        </IonMenu>
       <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
-          </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
-          <Route path="/YourLibrary">
-            <YourLibrary />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <Route path="/playmusic">
-            <PlayMusic />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/tab1" />
-          </Route>
+        <IonRouterOutlet id="main">
+          <Route exact path="/tab1" component={Tab1} />
+          <Redirect exact path="/" to="/tab1" />
+          <Route exact path="/account" component={Account} />
+          <Route exact path="/settings" component={Settings} />
+          <Route exact path="/new" component={New} />
+          <Route exact path="/history" component={History} />
+          <Route exact path="/tab2" component={Tab2} />
+          <Route exact path="/YourLibrary" component={YourLibrary} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
@@ -82,3 +109,4 @@ const App: React.FC = () => (
 );
 
 export default App;
+
