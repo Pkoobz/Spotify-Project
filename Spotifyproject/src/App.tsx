@@ -46,6 +46,10 @@ import Account from './pages/Account';
 import New from './pages/New';
 import History from './pages/History';
 import PlayMusic from './pages/PlayMusic';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
+import Lupapassword from './pages/Lupapassword';
+import Lupapassword1 from './pages/Lupapassword1';
 
 setupIonicReact();
 
@@ -87,6 +91,10 @@ const App: React.FC = () => (
           <Route exact path="/new" component={New} />
           <Route exact path="/history" component={History} />
           <Route exact path="/tab2" component={Tab2} />
+          <Route exact path="/registration" component={Registration} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/lupa" component={Lupapassword} />
+          <Route exact path="/lupa1" component={Lupapassword1} />
           <Route exact path="/YourLibrary" component={YourLibrary} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
@@ -109,4 +117,3 @@ const App: React.FC = () => (
 );
 
 export default App;
-
