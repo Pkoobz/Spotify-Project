@@ -7,7 +7,9 @@ const Registration:React.FC = () =>{
             <IonPage>
                 <IonHeader>
                     <IonToolbar>
-                        <IonBackButton defaultHref='/login' />
+                        <IonButtons slot='start'>  
+                            <IonBackButton defaultHref='/lupa' />
+                        </IonButtons>
                         <IonTitle>Buat akun</IonTitle>
                     </IonToolbar>
                 </IonHeader>
