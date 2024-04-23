@@ -8,7 +8,9 @@ const Lupapassword1:React.FC = () => {
             <IonPage>
                 <IonHeader>
                     <IonToolbar>
-                        <IonBackButton defaultHref='/lupa' />
+                        <IonButtons slot='start'>  
+                            <IonBackButton defaultHref='/login' />
+                        </IonButtons>
                         <IonTitle>Lupa Password</IonTitle>
                     </IonToolbar>
                 </IonHeader>
