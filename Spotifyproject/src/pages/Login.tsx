@@ -1,6 +1,5 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
 import { logoGoogle, logoTwitter, logoYahoo } from 'ionicons/icons';
 
 const Login: React.FC = () => {
