@@ -1,15 +1,53 @@
-import { IonAvatar, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonMenuButton, IonPage, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonTab, IonTabs, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonMenuButton, IonPage, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonTab, IonTabs, IonTitle, IonToolbar, IonicSlides } from '@ionic/react';
 import React from 'react';
 import './Tab1.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const Tab1: React.FC = () => {
+  const data = [
+    {
+      id:1,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+    {
+      id:2,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+    {
+      id:3,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+    {
+      id:4,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+    {
+      id:5,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+    {
+      id:6,
+      username:'abc',
+      testimonial:'dwedo'
+    },
+  ]
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton />
-            </IonButtons>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding'>
@@ -27,6 +65,132 @@ const Tab1: React.FC = () => {
                 <IonRow>
                   <IonCol>
                     <IonSearchbar showClearButton="always" value=""></IonSearchbar>
+                  </IonCol>
+                </IonRow>
+                <br />
+                <IonRow>
+                  <IonCol>
+                    <h1>Recommended songs</h1>
+                    <br />
+                    <Swiper
+                      spaceBetween={20}
+                      slidesPerView={2}
+                      scrollbar={{draggable:true}}
+                      onSlideChange={() => console.log('slide change')}
+                      onSwiper={swiper => console.log(swiper)}
+                    >
+                      {data.map(user => (
+                        <SwiperSlide key={user.id} className='slide'>
+                          <div className='slide-content'>
+                            <div className='user-image'>
+                              <img src='../public/favicon.png' className='user-photo' />
+                            </div>
+                            <h5>{user.username}</h5>
+                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>
+                    <h1>Recently played</h1>
+                    <br />
+                    <Swiper
+                      spaceBetween={20}
+                      slidesPerView={2}
+                      scrollbar={{draggable:true}}
+                      onSlideChange={() => console.log('slide change')}
+                      onSwiper={swiper => console.log(swiper)}
+                    >
+                      {data.map(user => (
+                        <SwiperSlide key={user.id} className='slide'>
+                          <div className='slide-content'>
+                            <div className='user-image'>
+                              <img src='../public/favicon.png' className='user-photo' />
+                            </div>
+                            <h5>{user.username}</h5>
+                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>
+                    <h1>Album from every artists</h1>
+                    <br />
+                    <Swiper
+                      spaceBetween={20}
+                      slidesPerView={2}
+                      scrollbar={{draggable:true}}
+                      onSlideChange={() => console.log('slide change')}
+                      onSwiper={swiper => console.log(swiper)}
+                    >
+                      {data.map(user => (
+                        <SwiperSlide key={user.id} className='slide'>
+                          <div className='slide-content'>
+                            <div className='user-image'>
+                              <img src='../public/favicon.png' className='user-photo' />
+                            </div>
+                            <h5>{user.username}</h5>
+                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>
+                    <h1>New songs</h1>
+                    <br />
+                    <Swiper
+                      spaceBetween={20}
+                      slidesPerView={2}
+                      scrollbar={{draggable:true}}
+                      onSlideChange={() => console.log('slide change')}
+                      onSwiper={swiper => console.log(swiper)}
+                    >
+                      {data.map(user => (
+                        <SwiperSlide key={user.id} className='slide'>
+                          <div className='slide-content'>
+                            <div className='user-image'>
+                              <img src='../public/favicon.png' className='user-photo' />
+                            </div>
+                            <h5>{user.username}</h5>
+                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>
+                    <h1>New artists</h1>
+                    <br />
+                    <Swiper
+                      spaceBetween={20}
+                      slidesPerView={2}
+                      scrollbar={{draggable:true}}
+                      onSlideChange={() => console.log('slide change')}
+                      onSwiper={swiper => console.log(swiper)}
+                    >
+                      {data.map(user => (
+                        <SwiperSlide key={user.id} className='slide'>
+                          <div className='slide-content'>
+                            <div className='user-image'>
+                              <img src='../public/favicon.png' className='user-photo' />
+                            </div>
+                            <h5>{user.username}</h5>
+                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
                   </IonCol>
                 </IonRow>
               </IonGrid>
