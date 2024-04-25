@@ -3,11 +3,6 @@ import './Tab3.css';
 import { search, add } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
 const Tab3: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<string>('playlists');
