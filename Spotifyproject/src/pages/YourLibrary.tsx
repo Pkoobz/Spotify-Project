@@ -1,8 +1,13 @@
 import { IonAlert, IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCheckbox, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemGroup, IonLabel, IonList, IonMenuButton, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
 import './Tab3.css';
-import { search, add } from 'ionicons/icons';
+import { search, add, ellipsisVerticalCircle, ellipsisVerticalOutline } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const Tab3: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<string>('playlists');
@@ -115,11 +120,13 @@ const Tab3: React.FC = () => {
             <IonCol>
               {data.map((user) => (
                 <>
-                  <IonCard className='ion-padding'>
+                  <IonCard className='ion-text-center ion-padding'>
                     <IonCardHeader>
-                      <IonAvatar>
-                        <IonImg src='../public/favicon.png' />
-                      </IonAvatar>
+                      <div id="a">
+                        <IonAvatar>
+                          <IonImg src='../public/favicon.png' />
+                        </IonAvatar>
+                      </div>
                     </IonCardHeader>
                     <IonCardTitle>{user.username}</IonCardTitle>
                     <IonCardContent>{user.testimonial}</IonCardContent>
@@ -180,9 +187,17 @@ const Tab3: React.FC = () => {
             </IonToolbar>
             <IonList>
               {playlists.map((playlist) => (
-                <IonItem key={playlist.id} routerLink={`/playlist/${playlist.id}`}>
+                <>
+                <IonItem key={playlist.id} routerLink={`/playlist/${playlist.id}`} className='ion-padding'>
+                  <IonButtons slot='start'>
+                    <IonImg src='../public/favicon.png' />
+                  </IonButtons>
                   <IonLabel>{playlist.name}</IonLabel>
+                  <IonButtons slot='end'>
+                    <IonIcon icon={ellipsisVerticalOutline} />
+                  </IonButtons>
                 </IonItem>
+                </>
               ))}
             </IonList>
           </>
