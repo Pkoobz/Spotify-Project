@@ -18,7 +18,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { book, ellipse, flash, home, homeOutline, libraryOutline, person, searchOutline, settings, square, star, time, triangle } from 'ionicons/icons';
+import { flash, homeOutline, libraryOutline, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import YourLibrary from './pages/YourLibrary';
@@ -50,6 +50,8 @@ import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Lupapassword from './pages/Lupapassword';
 import Lupapassword1 from './pages/Lupapassword1';
+import Playmusic from './pages/PlayMusic';
+import PlaylistDetail from './pages/PlaylistDetail';
 
 setupIonicReact();
 
@@ -85,9 +87,10 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet id="main">
           <Route exact path="/tab1" component={Tab1} />
-          <Redirect exact path="/" to="/tab1" />
+          <Redirect exact path="/" to="/login" />
           <Route exact path="/account" component={Account} />
           <Route exact path="/settings" component={Settings} />
+          <Route exact path="/playmusic" component={Playmusic} />
           <Route exact path="/new" component={New} />
           <Route exact path="/history" component={History} />
           <Route exact path="/tab2" component={Tab2} />
@@ -96,6 +99,7 @@ const App: React.FC = () => (
           <Route exact path="/lupa" component={Lupapassword} />
           <Route exact path="/lupa1" component={Lupapassword1} />
           <Route exact path="/YourLibrary" component={YourLibrary} />
+          <Route exact path="/playlist/:playlistId" component={PlaylistDetail} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
