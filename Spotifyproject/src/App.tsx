@@ -51,7 +51,7 @@ import Login from './pages/Login';
 import Lupapassword from './pages/Lupapassword';
 import Lupapassword1 from './pages/Lupapassword1';
 import Playmusic from './pages/PlayMusic';
-import PlaylistDetail from './pages/PlaylistDetail';
+import PlaylistDetail1 from './pages/PlaylistDetail1';
 
 setupIonicReact();
 
@@ -99,7 +99,7 @@ const App: React.FC = () => (
           <Route exact path="/lupa" component={Lupapassword} />
           <Route exact path="/lupa1" component={Lupapassword1} />
           <Route exact path="/YourLibrary" component={YourLibrary} />
-          <Route exact path="/playlist/:playlistId" component={PlaylistDetail} />
+          <Route exact path="/playlist/:playlistId" component={PlaylistDetail1} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
