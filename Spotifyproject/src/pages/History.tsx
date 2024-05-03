@@ -1,17 +1,23 @@
 import React from 'react';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonItem, IonLabel, IonList, IonThumbnail} from '@ionic/react';
+import { IonApp, IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonItem, IonLabel, IonList, IonThumbnail} from '@ionic/react';
 import { IonHeader, IonToolbar, IonTitle } from '@ionic/react';
 
 const History: React.FC = () => {
   return (
+    <IonApp>
     <IonCard>
-      <IonCardHeader>
-        <IonCardTitle>History Mu</IonCardTitle>
-      </IonCardHeader>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start" >
+          <IonBackButton defaultHref="/YourLibrary" />
+          </IonButtons>
+          <IonTitle>History</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonCardContent>
         <IonList>
+          <IonTitle>Jumat, 3 Mei 2024</IonTitle>
           <IonItem>
-            <IonTitle>Jumat, 3 Mei 2024</IonTitle>
             <IonThumbnail slot="start">
               <img alt="Lagu A" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
             </IonThumbnail>
@@ -46,9 +52,8 @@ const History: React.FC = () => {
             <IonCardSubtitle>IVE</IonCardSubtitle>
             <IonCard color="dark"></IonCard>
           </IonItem>
-
+          <IonTitle>Sabtu, 4 Mei 2024</IonTitle>
           <IonItem>
-            <IonTitle>Sabtu, 4 Mei 2024</IonTitle>
             <IonThumbnail slot="start">
               <img alt="Lagu E" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
             </IonThumbnail>
@@ -69,7 +74,9 @@ const History: React.FC = () => {
         </IonList>
       </IonCardContent>
     </IonCard>
+  </IonApp>
   )
 }
+
 
 export default History;

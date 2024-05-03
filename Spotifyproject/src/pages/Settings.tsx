@@ -1,12 +1,15 @@
 // SettingsPage.tsx
 import React from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle, IonButtons, IonBackButton } from '@ionic/react';
 
 const SettingsPage: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/YourLibrary" />
+                    </IonButtons>
                     <IonTitle>Settings</IonTitle>
                 </IonToolbar>
             </IonHeader>
