@@ -19,8 +19,8 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { flash, homeOutline, libraryOutline, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
+import Tab1 from './pages/Home';
+import Tab2 from './pages/Search';
 import YourLibrary from './pages/YourLibrary';
 
 /* Core CSS required for Ionic components to work properly */

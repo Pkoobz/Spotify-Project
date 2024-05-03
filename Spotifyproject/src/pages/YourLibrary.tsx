@@ -1,5 +1,4 @@
 import { IonAlert, IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCheckbox, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemGroup, IonLabel, IonList, IonMenuButton, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
-import './Tab3.css';
 import { search, add, ellipsisVerticalCircle, ellipsisVerticalOutline } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { OverlayEventDetail } from '@ionic/core/components';

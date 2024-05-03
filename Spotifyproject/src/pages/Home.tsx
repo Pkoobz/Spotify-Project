@@ -1,6 +1,5 @@
 import { IonAvatar, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonMenuButton, IonPage, IonRow, IonSearchbar, IonSegment, IonSegmentButton, IonTab, IonTabs, IonTitle, IonToolbar, IonicSlides } from '@ionic/react';
 import React from 'react';
-import './Tab1.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -60,11 +59,6 @@ const Tab1: React.FC = () => {
                     <IonAvatar>
                       <img alt="abc" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                     </IonAvatar>
-                  </IonCol>
-                </IonRow>
-                <IonRow>
-                  <IonCol>
-                    <IonSearchbar showClearButton="always" value=""></IonSearchbar>
                   </IonCol>
                 </IonRow>
                 <br />
