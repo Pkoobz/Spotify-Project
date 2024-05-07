@@ -59,6 +59,17 @@ const ProductContextProvider: React.FC<{children: any}> = props => {
         Preferences.set({key: 'users', value: JSON.stringify(stroableUsers)});
     }, [users]); 
 
+    const changeUser = (id: string, newPass: string) => {
+        setUsers(prevUsers => {
+            return prevUsers.map(user => {
+                if (user.id === id) {
+                    return {...user, pass: newPass};
+                }
+                return user;
+            });
+        });
+    };
+
     const [songs, setSongs] = useState<Song[]>([]);
     
     const addSong = (id: string,name: string,file1:string,photo: string, _Artist:any) => {
@@ -145,7 +156,7 @@ const ProductContextProvider: React.FC<{children: any}> = props => {
     }, [artists]);
 
     const[albums, setAlbums]=useState<Album[]>([]);
-    const addAlbum = (id: string,name: string,_Song:[], _Artist:[]) => {
+    const addAlbum = (id: string,name: string, _Song:any, _Artist:any) => {
         const newAlbums: Album = {
             id,
             name,
@@ -182,7 +193,7 @@ const ProductContextProvider: React.FC<{children: any}> = props => {
     }, [albums]);
 
     const[playlists, setPlaylists]=useState<Playlist[]>([]);
-    const addPlaylist = (id: string,name: string,_Song:[]) => {
+    const addPlaylist = (id: string,name: string,_Song:any) => {
         const newPlaylists: Playlist = {
             id,
             name,
