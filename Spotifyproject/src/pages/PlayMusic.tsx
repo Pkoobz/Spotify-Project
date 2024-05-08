@@ -1,8 +1,26 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonToggle, IonTitle } from "@ionic/react";
-import { arrowDownOutline, ellipsisVertical } from "ionicons/icons";
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonToggle, IonTitle, IonProgressBar } from "@ionic/react";
+import { arrowDownOutline, ellipsisVertical, pauseOutline } from "ionicons/icons";
+import { useEffect, useState } from "react";
 import './PlayMusic.css';
 
 const Playmusic = () => {
+    const [progress, setProgress] = useState(0); 
+    const handlePause = () => {
+    };
+
+  useEffect(() => {
+    const song = {
+      duration: 200, 
+      currentTime: 0
+    };
+
+    const interval = setInterval(() => {
+      setProgress(song.currentTime / song.duration);
+      song.currentTime++;
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
     return (
         <IonPage>
             <IonHeader>
@@ -22,16 +40,10 @@ const Playmusic = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonList>
-                    <IonItem>
-                        <IonLabel>Notifications</IonLabel>
-                        <IonToggle slot="end" />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Logout</IonLabel>
-                        <IonToggle slot="end" />
-                    </IonItem>
-                </IonList>
+                <IonProgressBar value={progress}></IonProgressBar> 
+                <IonButton onClick={handlePause}>
+                    <IonIcon slot="icon-only" icon={pauseOutline} />
+                </IonButton> 
             </IonContent>
         </IonPage>
 

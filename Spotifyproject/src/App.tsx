@@ -45,7 +45,6 @@ import Settings from './pages/Settings';
 import Account from './pages/Account';
 import New from './pages/New';
 import History from './pages/History';
-import PlayMusic from './pages/PlayMusic';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Lupapassword from './pages/Lupapassword';
