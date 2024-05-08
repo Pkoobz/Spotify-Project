@@ -13,12 +13,10 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonTitle,
-  IonToggle,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { flash, homeOutline, libraryOutline, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
+import { flash, homeOutline, libraryOutline, person, searchOutline, settings, time } from 'ionicons/icons';
 import Tab1 from './pages/Home';
 import Tab2 from './pages/Search';
 import YourLibrary from './pages/YourLibrary';

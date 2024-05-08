@@ -1,10 +1,11 @@
 import React from 'react';
-import { IonApp, IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonItem, IonLabel, IonList, IonThumbnail} from '@ionic/react';
+import { IonApp, IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonItem, IonLabel, IonList, IonPage, IonThumbnail} from '@ionic/react';
 import { IonHeader, IonToolbar, IonTitle } from '@ionic/react';
 
 const History: React.FC = () => {
   return (
-    <IonApp>
+  <>
+  <IonPage>
     <IonCard>
       <IonHeader>
         <IonToolbar>
@@ -74,7 +75,8 @@ const History: React.FC = () => {
         </IonList>
       </IonCardContent>
     </IonCard>
-  </IonApp>
+    </IonPage>
+  </>
   )
 }
 
