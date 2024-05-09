@@ -7,6 +7,17 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 const Tab1: React.FC = () => {
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          console.log("uid", uid)
+        } else {
+          console.log("user is logged out")
+        }
+      });
+     
+}, [])
   const data = [
     {
       id:1,
