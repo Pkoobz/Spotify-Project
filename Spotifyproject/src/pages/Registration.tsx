@@ -1,7 +1,35 @@
-import { IonBackButton, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import React from 'react';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import "../firebaseConfig";
+import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
+import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import React, { useRef, useState , useEffect} from 'react';
+import bcrypt from 'bcryptjs';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+import { useHistory } from 'react-router';
 
 const Registration:React.FC = () =>{
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [type, setType] = useState('user');
+    const history = useHistory();
+
+    const onSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault()
+       
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                history.push('/login');
+          })
+          .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorCode, errorMessage);
+          });
+      }
+    
     return(
         <>
             <IonPage>
@@ -22,23 +50,19 @@ const Registration:React.FC = () =>{
                                         <IonCol>
                                             <IonItemGroup>
                                                 <IonItem>
-                                                    <IonLabel>Masukkan username yang diinginkan</IonLabel>
-                                                    <IonInput type="text" />
+                                                    <IonLabel>Masukkan email yang diinginkan</IonLabel>
+                                                    <IonInput type="email" onIonChange={(e:any)=>setEmail(e.target.value)}/>
                                                 </IonItem>
                                                 <IonItem>
                                                     <IonLabel>Masukkan password yang diinginkan</IonLabel>
-                                                    <IonInput type="text" /> 
-                                                </IonItem>
-                                                <IonItem>   
-                                                    <IonLabel>Konfirmasi password</IonLabel> 
-                                                    <IonInput type="text" />
+                                                    <IonInput type="text" onIonChange={(e:any)=>setPassword(e.target.value)}/> 
                                                 </IonItem>
                                             </IonItemGroup>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton shape="round">Daftarkan</IonButton>
+                                            <IonButton shape="round" onClick={onSubmit}>Daftarkan</IonButton>
                                         </IonCol>
                                     </IonRow>
                                 </IonGrid>
@@ -52,3 +76,4 @@ const Registration:React.FC = () =>{
 }
 
 export default Registration;
+
