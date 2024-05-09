@@ -49,10 +49,25 @@ import Lupapassword from './pages/Lupapassword';
 import Lupapassword1 from './pages/Lupapassword1';
 import Playmusic from './pages/PlayMusic';
 import PlaylistDetail1 from './pages/PlaylistDetail1';
+import { signOut } from 'firebase/auth';
+import { auth } from './firebaseConfig';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  const history = useHistory();
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      history.push("/login");
+      console.log("Signed out successfully");
+    }).catch((error) => {
+      // An error happened.
+      console.error("Error signing out:", error);
+    });
+  };
+
   <IonApp>
     <IonReactRouter>
         <IonMenu contentId="main">
@@ -76,6 +91,9 @@ const App: React.FC = () => (
                 <IonItem button routerLink="/settings">
                   <IonIcon icon={settings} size="large"/>
                   <IonLabel className='menu'>Settings and privacy</IonLabel>
+                </IonItem>
+                <IonItem button onClick={handleLogout}>
+                  <IonLabel className='menu'>Logout</IonLabel>
                 </IonItem>
               </IonMenuToggle>
             </IonList>
