@@ -1,0 +1,35 @@
+ion-button.searchbutton{
+    background-color: transparent;
+    color: aliceblue;
+}
+
+ion-button.artist{
+    background-color: grey;
+    font-size: 9px;
+    width: fit-content;
+    color: aliceblue;
+    min-height: 10px !important;
+}
+
+ion-button.swap{
+    background-color: transparent;
+    color: aliceblue;
+}
+
+ion-button.add-artist{
+    background-color: transparent;
+    color: white;
+}
+
+ion-item.add-artist{
+    --background: transparent;
+    --border-color: transparent;
+}
+
+
+ion-icon.plus{
+    font-size: 30px;
+    text-align: start;
+    justify-content: start;
+    
+}
