@@ -3,29 +3,27 @@ import ExploreContainer from '../components/ExploreContainer';
 import { logoGoogle, logoTwitter, logoYahoo } from 'ionicons/icons';
 import { useRef, useState } from 'react';
 import "../firebaseConfig";
-
 import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
-
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebaseConfig';
 import { useHistory } from 'react-router-dom';
-import { GoogleAuthProvider } from "firebase/auth";
-
+import { GoogleAuthProvider,getAuth, signInWithEmailAndPassword, signInWithPopup,TwitterAuthProvider, OAuthProvider } from "firebase/auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
   const provider = new GoogleAuthProvider();
+  const provider0 = new OAuthProvider('yahoo.com');
+  const provider1 = new TwitterAuthProvider();
+    
+  const auth = getAuth();
 
   const onLogin = (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-          // Signed in
           const user = userCredential.user;
-          history.push('/home');
+          history.push('/tab1');
           console.log(user);
       })
       .catch((error) => {
@@ -33,8 +31,44 @@ const Login: React.FC = () => {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage)
       });
+  }  
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      history.push('/tab1');
+      console.log(user);
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
   }
-  
+
+  const signInWithTwitter = () => {
+    signInWithPopup(auth, provider1)
+    .then((result) => {
+      const user = result.user;
+      history.push('/tab1');
+      console.log(user);
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
+  }
+  const signInWithYahoo = () => {
+    signInWithPopup(auth, provider0)
+    .then((result) => {
+      const user = result.user;
+      history.push('/tab1');
+      console.log(user);
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
+  }
   return (
     <IonPage>
       <IonContent className='ion-padding'>
@@ -80,9 +114,9 @@ const Login: React.FC = () => {
           <IonRow className="ion-text-center">
             <IonCol>
               <IonItemGroup>
-                <IonItem><IonButton><IonIcon icon={logoGoogle} />Sign in with Google</IonButton></IonItem>
-                <IonItem><IonButton><IonIcon icon={logoTwitter} />Sign in with Twitter</IonButton></IonItem>
-                <IonItem><IonButton><IonIcon icon={logoYahoo}/>Sign in with Yahoo</IonButton></IonItem>
+                <IonItem><IonButton onClick={signInWithGoogle}><IonIcon icon={logoGoogle} />Sign in with Google</IonButton></IonItem>
+                <IonItem><IonButton onClick={signInWithTwitter}><IonIcon icon={logoTwitter} />Sign in with Twitter</IonButton></IonItem>
+                <IonItem><IonButton onClick={signInWithYahoo}><IonIcon icon={logoYahoo}/>Sign in with Yahoo</IonButton></IonItem>
               </IonItemGroup>
             </IonCol>
           </IonRow>
@@ -100,4 +134,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
