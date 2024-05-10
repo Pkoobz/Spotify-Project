@@ -1,47 +1,26 @@
-import { Redirect, Route } from 'react-router-dom';
-import {
-  IonApp,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact
-} from '@ionic/react';
+import { Redirect, Route, useHistory } from 'react-router-dom';
+import {IonApp,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonList,IonMenu,IonMenuToggle,IonRouterOutlet,IonTabBar,IonTabButton,IonTabs,IonTitle,IonToggle,setupIonicReact} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { flash, homeOutline, libraryOutline, person, searchOutline, settings, time } from 'ionicons/icons';
+import { flash, hammerOutline, homeOutline, libraryOutline, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Home';
 import Tab2 from './pages/Search';
 import YourLibrary from './pages/YourLibrary';
-
-/* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
-/* Theme variables */
 import './theme/variables.css';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
+import New from './pages/New';
 import History from './pages/History';
+import PlayMusic from './pages/PlayMusic';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Lupapassword from './pages/Lupapassword';
@@ -50,6 +29,10 @@ import Playmusic from './pages/PlayMusic';
 import PlaylistDetail1 from './pages/PlaylistDetail1';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebaseConfig';
+import Admin from './pages/Admin';
+import { useState, useEffect } from 'react';
+import { collection,getFirestore, getDocs } from 'firebase/firestore';
+import Addartist from './pages/Addartist';
 
 setupIonicReact();
 
@@ -58,15 +41,37 @@ const App: React.FC = () => {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
-      // Sign-out successful.
       history.push("/login");
       console.log("Signed out successfully");
     }).catch((error) => {
-      // An error happened.
       console.error("Error signing out:", error);
     });
   };
+  
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const db = getFirestore();
 
+  useEffect(() => {
+    const fetchUserType = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data();
+          if (userData.email === auth.currentUser?.email) {
+            if (userData.type === 'admin') {
+              setIsAdmin(true);
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching user type:', error);
+      }
+    };
+  
+    fetchUserType();
+  }, []);
+
+  return(
   <IonApp>
     <IonReactRouter>
         <IonMenu contentId="main">
@@ -91,6 +96,10 @@ const App: React.FC = () => {
                   <IonIcon icon={settings} size="large"/>
                   <IonLabel className='menu'>Settings and privacy</IonLabel>
                 </IonItem>
+                <IonItem button routerLink="/admin" hidden={!isAdmin}>
+                  <IonIcon icon={hammerOutline} size="large"/>
+                  <IonLabel className='menu'>Admin</IonLabel>
+                </IonItem>
                 <IonItem button onClick={handleLogout}>
                   <IonLabel className='menu'>Logout</IonLabel>
                 </IonItem>
@@ -102,13 +111,16 @@ const App: React.FC = () => {
         <IonRouterOutlet id="main">
           <Route exact path="/tab1" component={Tab1} />
           <Redirect exact path="/" to="/login" />
+          <Route exact path="/addartist" component={Addartist} />
           <Route exact path="/account" component={Account} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/playmusic" component={Playmusic} />
+          <Route exact path="/new" component={New} />
           <Route exact path="/history" component={History} />
           <Route exact path="/tab2" component={Tab2} />
           <Route exact path="/registration" component={Registration} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/admin" component={Admin} />
           <Route exact path="/lupa" component={Lupapassword} />
           <Route exact path="/lupa1" component={Lupapassword1} />
           <Route exact path="/YourLibrary" component={YourLibrary} />
@@ -132,5 +144,5 @@ const App: React.FC = () => {
     </IonReactRouter>
   </IonApp>
 );
-
+};
 export default App;
