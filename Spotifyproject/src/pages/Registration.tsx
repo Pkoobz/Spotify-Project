@@ -1,18 +1,44 @@
 import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import "../firebaseConfig";
+import {auth} from"../firebaseConfig";
 import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import React, { useRef, useState , useEffect} from 'react';
 import bcrypt from 'bcryptjs';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
 import { useHistory } from 'react-router';
 
 const Registration:React.FC = () =>{
+    const username = useRef<HTMLIonInputElement>(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [type, setType] = useState('user');
+    const [fileName,setFilename] = useState('../public/favicon.png');
+    const [selectedFile, setSelectedFile] = useState<File>();
+    const storage = getStorage();
+    console.log(storage)
     const history = useHistory();
+    const db = getFirestore();
+    console.log(db)
+    const [users,setUsers] = useState<Array<any>>([]);
+
+    const addData = async(url: string) => {
+        try {
+                const passwordValue = password;
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(passwordValue, salt);
+                const docRef = await addDoc(collection(db, "users"), {
+                    username: username.current?.value,
+                    email: email,
+                    password: hashedPassword,
+                    type: type,
+                    foto: fileName,
+                    fotoUrl: url
+                });
+                console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
@@ -22,13 +48,21 @@ const Registration:React.FC = () =>{
                 const user = userCredential.user;
                 console.log(user);
                 history.push('/login');
-          })
-          .catch((error) => {
+        })
+        .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
               console.log(errorCode, errorMessage);
-          });
-      }
+        });
+        const storageRef = ref(storage, fileName);
+        
+        uploadBytes(storageRef, selectedFile as Blob).then(() => {
+            console.log('upload file success');
+            getDownloadURL(ref(storage, fileName)).then((url) =>{
+                addData(url);
+            })
+        })
+    }
     
     return(
         <>
@@ -49,6 +83,10 @@ const Registration:React.FC = () =>{
                                     <IonRow>
                                         <IonCol>
                                             <IonItemGroup>
+                                                <IonItem>
+                                                    <IonLabel>Masukkan Username yang diinginkan</IonLabel>
+                                                    <IonInput type="text" ref={username} />
+                                                </IonItem>
                                                 <IonItem>
                                                     <IonLabel>Masukkan email yang diinginkan</IonLabel>
                                                     <IonInput type="email" onIonChange={(e:any)=>setEmail(e.target.value)}/>
@@ -76,4 +114,3 @@ const Registration:React.FC = () =>{
 }
 
 export default Registration;
-
