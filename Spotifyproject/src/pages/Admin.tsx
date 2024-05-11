@@ -84,7 +84,7 @@ const Admin:React.FC = () => {
                                                             <tr key={artist.id}>
                                                                 <td>{index + 1}</td>
                                                                 <td>{artist.namaartist}</td>
-                                                                <td>{artist.foto}</td>
+                                                                <td><img src={artist.fotoUrl}/></td>
                                                                 <td><IonButton routerLink={`/admin/${artist.id}`}>Edit</IonButton></td>
                                                                 <td><IonButton onClick={() => deleteArtist(artist.id)}>Delete</IonButton></td>
                                                             </tr>
@@ -112,8 +112,8 @@ const Admin:React.FC = () => {
                                                                 <td>{index + 1}</td>
                                                                 <td>{lagu.namalagu}</td>
                                                                 <td>{lagu.namaartist}</td>
-                                                                <td>{lagu.foto0}</td>
-                                                                <td>{lagu.foto1}</td>
+                                                                <td><img src={lagu.fotoUrl0} /></td>
+                                                                <td><img src={lagu.fotoUrl1}/></td>
                                                                 <td><IonButton routerLink={`/admin/${lagu.id}`}>Edit</IonButton></td>
                                                                 <td><IonButton onClick={() => deleteLagu(lagu.id)}>Delete</IonButton></td>
                                                             </tr>
