@@ -9,8 +9,8 @@ import { useHistory } from 'react-router';
 const Addartist:React.FC = () => {
     const history = useHistory();
     const namaartist = useRef<HTMLIonInputElement>(null);
-    const [fileName0,setFilename0] = useState('');
-    const [selectedFile0, setSelectedFile0] = useState<File>();
+    const [fileName,setFilename] = useState('');
+    const [selectedFile, setSelectedFile] = useState<File>();
     const storage = getStorage();
     console.log(storage)
 
@@ -20,10 +20,10 @@ const Addartist:React.FC = () => {
 
     const addArtist = async(url: string) => {
         try {
-                const docRef = await addDoc(collection(db, "users"), {
+                const docRef = await addDoc(collection(db, "artists"), {
                     namaartist: namaartist.current?.value,
-                    foto0: fileName0,
-                    fotoUrl0: url
+                    foto: fileName,
+                    fotoUrl: url
                 });
                 console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -31,17 +31,17 @@ const Addartist:React.FC = () => {
         }
     }
     
-    const fileChangeHandler0 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedFile0(event.target!.files![0]);
-        setFilename0(event.target!.files![0].name);
+    const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFile(event.target!.files![0]);
+        setFilename(event.target!.files![0].name);
     };
 
     const insertHandler0 = async() => {
-        const storageRef = ref(storage, fileName0);
+        const storageRef = ref(storage, fileName);
         
-        uploadBytes(storageRef, selectedFile0 as Blob).then(() => {
+        uploadBytes(storageRef, selectedFile as Blob).then(() => {
             console.log('upload file success');
-            getDownloadURL(ref(storage, fileName0)).then((url) =>{
+            getDownloadURL(ref(storage, fileName)).then((url) =>{
                 addArtist(url);
             })
             history.push('/admin');
@@ -71,7 +71,7 @@ const Addartist:React.FC = () => {
                                                     <IonInput type="text" ref={namaartist} />
                                                 </IonItem>
                                                 <IonItem>
-                                                    <input type="file" onChange={fileChangeHandler0}/>
+                                                    <input type="file" onChange={fileChangeHandler}/>
                                                 </IonItem>
                                             </IonItemGroup>
                                         </IonCol>
