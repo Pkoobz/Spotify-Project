@@ -12,7 +12,7 @@ const Admin:React.FC = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const querySnapshot = await getDocs(collection(db, "users"));
+                const querySnapshot = await getDocs(collection(db, "artists"));
                 setArtists(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
             } catch (error) {
                 console.error("Error getting documents: ", error);
@@ -23,7 +23,7 @@ const Admin:React.FC = () => {
 
     async function deleteArtist(artistId: string) {
         try {
-            await deleteDoc(doc(db, "users", artistId));
+            await deleteDoc(doc(db, "artists", artistId));
             setArtists(artists.filter(artist => artist.id !== artistId));
         } catch (error) {
             console.error("Error removing document: ", error);
@@ -62,8 +62,8 @@ const Admin:React.FC = () => {
                                                             <tr key={artist.id}>
                                                                 <td>{index + 1}</td>
                                                                 <td>{artist.namaartist}</td>
-                                                                <td>{artist.foto0}</td>
-                                                                <td></td>
+                                                                <td>{artist.foto}</td>
+                                                                <td><IonButton routerLink={`/admin/${artist.id}`}>Edit</IonButton></td>
                                                                 <td><IonButton onClick={() => deleteArtist(artist.id)}>Delete</IonButton></td>
                                                             </tr>
                                                         ))}
