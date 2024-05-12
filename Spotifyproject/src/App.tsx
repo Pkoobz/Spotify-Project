@@ -18,7 +18,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
-import New from './pages/New';
 import History from './pages/History';
 import PlayMusic from './pages/PlayMusic';
 import Registration from './pages/Registration';
@@ -115,7 +114,6 @@ const App: React.FC = () => {
           <Route exact path="/account" component={Account} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/playmusic" component={Playmusic} />
-          <Route exact path="/new" component={New} />
           <Route exact path="/history" component={History} />
           <Route exact path="/tab2" component={Tab2} />
           <Route exact path="/registration" component={Registration} />
