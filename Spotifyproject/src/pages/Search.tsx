@@ -54,12 +54,12 @@ const Tab2: React.FC = () => {
           <IonRow>
             <IonCol size-sm="8" offset-sm="2" size-md="6" offset-md="3">
               <IonGrid className='ion-no-padding'>
-                <IonCol>
+                {/* <IonCol>
                   <IonAvatar>
                     <img alt="abc" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                   </IonAvatar>
                   <IonTitle>Cari</IonTitle>
-                </IonCol>
+                </IonCol> */}
                 <IonButtons slot='end'>
                   <IonButton><IonIcon icon={cameraOutline} /></IonButton>
                 </IonButtons>
@@ -74,7 +74,7 @@ const Tab2: React.FC = () => {
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
@@ -99,7 +99,7 @@ const Tab2: React.FC = () => {
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}

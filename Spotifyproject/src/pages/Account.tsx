@@ -1,6 +1,7 @@
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonTitle, IonButton, IonIcon, IonItem } from '@ionic/react';
 import { ellipsisVerticalOutline } from 'ionicons/icons';
 import React from 'react';
+import './Account.css'
 
 const Account:React.FC = () => {
 

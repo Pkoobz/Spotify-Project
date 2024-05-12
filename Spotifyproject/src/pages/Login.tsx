@@ -74,20 +74,22 @@ const Login: React.FC = () => {
     <IonPage>
       <IonContent className='ion-padding'>
         <IonGrid>
-          <IonRow className="ion-text-center">
+          <IonRow>
             <IonCol>
+
+            <IonLabel className='labelemail' position="floating">Masukkan Email</IonLabel>
               <IonItem>
-                <IonLabel position="floating">Masukkan Email</IonLabel>
                 <IonInput type="text" onIonChange={(e:any)=>setEmail(e.target.value)}/>
               </IonItem>
             </IonCol>
           </IonRow>
         </IonGrid>
         <IonGrid>
-          <IonRow className="ion-text-center">
+          <IonRow>
             <IonCol>
+
+            <IonLabel className='labelpw' position="floating" >Masukkan Password</IonLabel>
               <IonItem className='item'>
-                <IonLabel position="floating" >Masukkan Password</IonLabel>
                 <IonInput type="password" onIonChange={(e:any)=>setPassword(e.target.value)} />
               </IonItem>
             </IonCol>

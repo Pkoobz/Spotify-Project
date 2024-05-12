@@ -84,24 +84,27 @@ const Registration:React.FC = () =>{
                                     <IonRow>
                                         <IonCol>
                                             <IonItemGroup>
+
+                                            <IonLabel className='label1'>Masukkan username yang diinginkan</IonLabel>
                                                 <IonItem>
-                                                    <IonLabel>Masukkan Username yang diinginkan</IonLabel>
                                                     <IonInput type="text" ref={username} />
                                                 </IonItem>
+
+                                                <IonLabel className='label2'>Masukkan email yang diinginkan</IonLabel>
                                                 <IonItem>
-                                                    <IonLabel>Masukkan email yang diinginkan</IonLabel>
-                                                    <IonInput type="email" onIonChange={(e:any)=>setEmail(e.target.value)}/>
+                                                     <IonInput type="email" onIonChange={(e:any)=>setEmail(e.target.value)}/>
                                                 </IonItem>
+
+                                                <IonLabel className='label2'>Masukkan password yang diinginkan</IonLabel>
                                                 <IonItem>
-                                                    <IonLabel>Masukkan password yang diinginkan</IonLabel>
-                                                    <IonInput type="text" onIonChange={(e:any)=>setPassword(e.target.value)}/> 
+                                                     <IonInput type="text" onIonChange={(e:any)=>setPassword(e.target.value)}/> 
                                                 </IonItem>
                                             </IonItemGroup>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton shape="round" onClick={onSubmit}>Daftarkan</IonButton>
+                                            <IonButton className='button-1' shape="round" onClick={onSubmit}>Daftarkan</IonButton>
                                         </IonCol>
                                     </IonRow>
                                 </IonGrid>

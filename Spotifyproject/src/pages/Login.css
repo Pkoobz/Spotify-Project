@@ -35,3 +35,16 @@
 .item{
   --border-radius:100px;
   }
+
+.labelemail{
+    text-align: left;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.labelpw{
+    text-align: left;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+}
+

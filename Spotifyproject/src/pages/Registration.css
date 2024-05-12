@@ -1,0 +1,16 @@
+.label2{
+    padding-top: 20px;
+    --ion-font-family: 'Times New Roman', Times, serif;
+}
+
+.label1{
+    --ion-font-family: 'Times New Roman', Times, serif;
+}
+
+.button-1{
+        --border-radius:100px;
+        width: 265px;
+        --background: rgb(113, 205, 127);
+        --justify-content: center;
+    }
+    
