@@ -24,6 +24,7 @@ import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Lupapassword from './pages/Lupapassword';
 import Lupapassword1 from './pages/Lupapassword1';
+import Offline from './pages/OfflineM';
 import Playmusic from './pages/PlayMusic';
 import PlaylistDetail1 from './pages/PlaylistDetail1';
 import { signOut } from 'firebase/auth';
@@ -115,6 +116,7 @@ const App: React.FC = () => {
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/playmusic" component={Playmusic} />
           <Route exact path="/history" component={History} />
+          <Route exact path="/new" component={Offline} />
           <Route exact path="/tab2" component={Tab2} />
           <Route exact path="/registration" component={Registration} />
           <Route exact path="/login" component={Login} />
