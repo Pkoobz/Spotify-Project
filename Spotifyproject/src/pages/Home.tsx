@@ -77,11 +77,11 @@ const Tab1: React.FC = () => {
                 <br />
                 <IonRow>
                   <IonCol>
-                    <h1>Recommended songs</h1>
+                    <h3>Recommended songs</h3>
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
@@ -102,11 +102,11 @@ const Tab1: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>
-                    <h1>Recently played</h1>
+                    <h3>Recently played</h3>
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
@@ -131,7 +131,7 @@ const Tab1: React.FC = () => {
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
@@ -156,7 +156,7 @@ const Tab1: React.FC = () => {
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
@@ -181,7 +181,7 @@ const Tab1: React.FC = () => {
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={2}
+                      slidesPerView={3}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}

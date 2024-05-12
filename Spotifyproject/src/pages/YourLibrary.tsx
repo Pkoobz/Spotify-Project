@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import './YourLibrary.css'
 
 const Tab3: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<string>('playlists');
@@ -155,13 +156,13 @@ const Tab3: React.FC = () => {
             <IonCol>
               {data.map((user) => (
                 <>
-                <IonItem className='ion-padding'>
+                <IonItem className='artist-list-item'>
                   <IonButtons slot='start'>
-                    <IonAvatar>
+                    <IonAvatar className='size-avatar'>
                       <IonImg src='../public/favicon.png' />
                     </IonAvatar>
                   </IonButtons>
-                  <IonTitle>{user.username}</IonTitle>
+                  <IonTitle className='title-artist-segment'>{user.username}</IonTitle>
                 </IonItem>
                 </>
               ))}

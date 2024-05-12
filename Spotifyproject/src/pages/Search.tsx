@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import './Search.css'
 
 const Tab2: React.FC = () => {
   const data = [
@@ -70,7 +71,7 @@ const Tab2: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>
-                    <h1>Jelajahi Genre</h1>
+                    <h2 className='h2-genre'>Jelajahi Genre</h2>
                     <br />
                     <Swiper
                       spaceBetween={20}
@@ -95,7 +96,7 @@ const Tab2: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>
-                    <h1>Jelajahi Artis</h1>
+                    <h2 className='h2-genre'>Jelajahi Artis</h2>
                     <br />
                     <Swiper
                       spaceBetween={20}

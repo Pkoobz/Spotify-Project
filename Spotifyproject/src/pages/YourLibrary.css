@@ -1,0 +1,19 @@
+.artist-list-item{
+    --border-radius: 100px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 250px;
+    left: 10%;
+    
+}
+
+.size-avatar{
+    height: 35px;
+    width: 35px;
+}
+
+.title-artist-segment{
+    text-align: center;
+    padding: 0%;
+    padding-right: 50px;
+}
