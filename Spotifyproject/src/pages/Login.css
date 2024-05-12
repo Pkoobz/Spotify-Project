@@ -1,0 +1,37 @@
+.button1{
+    --border-radius:100px;
+    width: 250px;
+    --background: rgb(147, 50, 50);
+}
+
+.button2{
+    --border-radius:100px;
+    width: 250px;
+    --background: rgb(19, 129, 225);
+}
+
+.button3{
+    --border-radius:100px;
+    width: 250px;
+    --background: rgb(21, 27, 111);
+}
+
+.button4{
+    --border-radius:100px;
+    width: 250px;
+    --background: transparent;
+}
+
+.button-login{
+    --border-radius: 50px;
+    --background: rgb(0, 255, 102);
+}
+
+.button-daftar{
+    --border-radius: 50px;
+    --background: rgb(19, 129, 225);
+}
+
+.item{
+  --border-radius:100px;
+  }

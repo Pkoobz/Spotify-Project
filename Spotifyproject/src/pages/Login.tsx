@@ -7,6 +7,7 @@ import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { useHistory } from 'react-router-dom';
 import { GoogleAuthProvider,getAuth, signInWithEmailAndPassword, signInWithPopup,TwitterAuthProvider, OAuthProvider } from "firebase/auth";
+import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -85,8 +86,8 @@ const Login: React.FC = () => {
         <IonGrid>
           <IonRow className="ion-text-center">
             <IonCol>
-              <IonItem>
-                <IonLabel position="floating">Masukkan Password</IonLabel>
+              <IonItem className='item'>
+                <IonLabel position="floating" >Masukkan Password</IonLabel>
                 <IonInput type="password" onIonChange={(e:any)=>setPassword(e.target.value)} />
               </IonItem>
             </IonCol>
@@ -95,39 +96,26 @@ const Login: React.FC = () => {
         <IonGrid>
           <IonRow className="ion-text-center">
             <IonCol>
-              <IonItem>
-                <IonButton color="success" onClick={onLogin}>Log In</IonButton>
-              </IonItem>
+
+                <IonButton className='button-login' onClick={onLogin}>Log In</IonButton>
+                <IonButton className='button-daftar'  routerLink='/registration'>Daftar</IonButton>
+
             </IonCol>
           </IonRow>
         </IonGrid>
-        <IonGrid>
+        
+
           <IonRow className="ion-text-center">
-            <IonCol>
-              <IonItem>
-                <IonButton color="success" routerLink='/registration'>Daftar</IonButton>
-              </IonItem>
+            <IonCol className='colbutton'>
+
+                <IonButton className='button1' onClick={signInWithGoogle}><IonIcon icon={logoGoogle} />Sign in with Google</IonButton>
+                <IonButton className='button2' onClick={signInWithTwitter}><IonIcon icon={logoTwitter} />Sign in with Twitter</IonButton>
+                <IonButton className='button3' onClick={signInWithYahoo}><IonIcon icon={logoYahoo}/>Sign in with Yahoo</IonButton>
+                <IonButton className='button4' routerLink='/lupa'>Lupa Password ?</IonButton>
             </IonCol>
           </IonRow>
-        </IonGrid>
-        <IonGrid>
-          <IonRow className="ion-text-center">
-            <IonCol>
-              <IonItemGroup>
-                <IonItem><IonButton onClick={signInWithGoogle}><IonIcon icon={logoGoogle} />Sign in with Google</IonButton></IonItem>
-                <IonItem><IonButton onClick={signInWithTwitter}><IonIcon icon={logoTwitter} />Sign in with Twitter</IonButton></IonItem>
-                <IonItem><IonButton onClick={signInWithYahoo}><IonIcon icon={logoYahoo}/>Sign in with Yahoo</IonButton></IonItem>
-              </IonItemGroup>
-            </IonCol>
-          </IonRow>
-          <IonRow className="ion-text-center">
-            <IonCol>
-              <IonItem>
-                <IonButton color="danger" routerLink='/lupa'>Lupa Password ?</IonButton>
-              </IonItem>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+          
+
       </IonContent>
     </IonPage>
   );

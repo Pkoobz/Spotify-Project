@@ -6,6 +6,7 @@ import React, { useRef, useState , useEffect} from 'react';
 import bcrypt from 'bcryptjs';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useHistory } from 'react-router';
+import './Registration.css';
 
 const Registration:React.FC = () =>{
     const username = useRef<HTMLIonInputElement>(null);
