@@ -13,9 +13,9 @@ interface Song {
 
 const Tab1: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([
-    { title: 'Song 1', artist: 'Artist 1', cover: 'src/assets/img/album1.jpg', file: 'song1.mp3'},
-    { title: 'Song 2', artist: 'Artist 2', cover: 'src/assets/img/album2.jpg', file: 'song1.mp3'},
-    { title: 'Song 3', artist: 'Artist 3', cover: 'src/assets/img/album3.jpg', file: 'song1.mp3'}
+    { title: 'Song 1', artist: 'Artist 1', cover: 'src/assets/img/album1.jpg', file: 'Losing You.mp3'},
+    { title: 'Song 2', artist: 'Artist 2', cover: 'src/assets/img/album2.jpg', file: 'With U.mp3'},
+    { title: 'Song 3', artist: 'Artist 3', cover: 'src/assets/img/album3.jpg', file: 'Ghost.mp3'}
   ]);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -58,7 +58,7 @@ const Tab1: React.FC = () => {
       audio.currentTime = 0;
     }
     setCurrentSong(song);
-    const newAudio = new Audio(`assets/audio/${song.file}`);
+    const newAudio = new Audio(`src/assets/audio/${song.file}`);
     setAudio(newAudio);
     setIsPlaying(false);
     setIsMuted(false);
