@@ -87,7 +87,7 @@ const App: React.FC = () => {
                 </IonItem>
                 <IonItem button routerLink="/new">
                   <IonIcon icon={flash}size="large" />
-                  <IonLabel className='menu'>What's new</IonLabel>
+                  <IonLabel className='menu'>Downloaded Music</IonLabel>
                 </IonItem>
                 <IonItem button routerLink="/history">
                   <IonIcon icon={time} size="large"/>
