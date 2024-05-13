@@ -33,6 +33,7 @@ import Admin from './pages/Admin';
 import { useState, useEffect } from 'react';
 import { collection,getFirestore, getDocs } from 'firebase/firestore';
 import Addartist from './pages/Addartist';
+import PlayMusic2 from './pages/PlayMusic2';
 
 setupIonicReact();
 
@@ -115,6 +116,7 @@ const App: React.FC = () => {
           <Route exact path="/account" component={Account} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/playmusic" component={Playmusic} />
+          <Route exact path="/playmusic2" component={PlayMusic2} />
           <Route exact path="/history" component={History} />
           <Route exact path="/new" component={Offline} />
           <Route exact path="/tab2" component={Tab2} />

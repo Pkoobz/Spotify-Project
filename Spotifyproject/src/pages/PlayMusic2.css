@@ -1,0 +1,27 @@
+.image-play-music{
+    text-align: center;
+    justify-content: center;
+    --border-radius: 0%;
+    left: 50px;
+    top: 5%;
+    height: 200px;
+    width: 200px;
+    position: relative;
+    justify-self: center;
+
+}
+
+.divmusic{
+    text-align: center;
+    justify-content: center;
+}
+
+.h2musicplay{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+}
+
+.cardsubmusic{
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+}
