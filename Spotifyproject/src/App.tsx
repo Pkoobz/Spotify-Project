@@ -1,7 +1,7 @@
 import { Redirect, Route, useHistory } from 'react-router-dom';
 import {IonApp,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonList,IonMenu,IonMenuToggle,IonRouterOutlet,IonTabBar,IonTabButton,IonTabs,IonTitle,IonToggle,setupIonicReact} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { flash, hammerOutline, homeOutline, libraryOutline, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
+import { flash, hammerOutline, homeOutline, libraryOutline, musicalNote, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Home';
 import Tab2 from './pages/Search';
 import YourLibrary from './pages/YourLibrary';
@@ -140,6 +140,10 @@ const App: React.FC = () => {
           <IonTabButton tab="tab3" href="/YourLibrary">
             <IonIcon aria-hidden="true" icon={libraryOutline} />
             <IonLabel>Your Library</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="tab4" href="/playmusic2">
+            <IonIcon aria-hidden="true" icon={musicalNote} />
+            <IonLabel>Play Music</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

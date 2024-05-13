@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonRange, IonIcon, IonCol, IonRow, IonAvatar } from '@ionic/react';
-import { play, pause, playBack, playForward, volumeHigh, volumeMute } from 'ionicons/icons';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonRange, IonIcon, IonCol, IonRow, IonAvatar, IonButtons, IonButton } from '@ionic/react';
+import { play, pause, playBack, playForward, volumeHigh, volumeMute, arrowBackCircleOutline } from 'ionicons/icons';
 import './PlayMusic2.css'
 
 
@@ -13,9 +13,9 @@ interface Song {
 
 const Tab1: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([
-    { title: 'Song 1', artist: 'Artist 1', cover: 'src/assets/img/album1.jpg', file: 'Losing You.mp3'},
-    { title: 'Song 2', artist: 'Artist 2', cover: 'src/assets/img/album2.jpg', file: 'With U.mp3'},
-    { title: 'Song 3', artist: 'Artist 3', cover: 'src/assets/img/album3.jpg', file: 'Ghost.mp3'}
+    { title: 'Losing You ', artist: 'Blanke', cover: 'src/assets/img/album1.jpg', file: 'Losing You.mp3'},
+    { title: 'With U ', artist: 'Roy Knox', cover: 'src/assets/img/album2.jpg', file: 'With U.mp3'},
+    { title: 'Ghost', artist: 'Justin Bieber', cover: 'src/assets/img/album3.jpg', file: 'Ghost.mp3'}
   ]);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -98,6 +98,9 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+            <IonButton routerLink="/yourlibrary">
+            <IonIcon slot="icon-only" icon={arrowBackCircleOutline}></IonIcon>
+            </IonButton>
           <IonTitle>Music Player</IonTitle>
         </IonToolbar>
       </IonHeader>
