@@ -1,5 +1,5 @@
 import { Redirect, Route, useHistory } from 'react-router-dom';
-import {IonApp,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonList,IonMenu,IonMenuToggle,IonRouterOutlet,IonTabBar,IonTabButton,IonTabs,IonTitle,IonToggle,setupIonicReact} from '@ionic/react';
+import { IonApp,IonContent,IonHeader,IonIcon,IonItem,IonLabel,IonList,IonMenu,IonMenuToggle,IonRouterOutlet,IonTabBar,IonTabButton,IonTabs,IonTitle,IonToggle,setupIonicReact} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { flash, hammerOutline, homeOutline, libraryOutline, musicalNote, person, searchOutline, settings, time, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Home';
@@ -48,6 +48,13 @@ const App: React.FC = () => {
       console.error("Error signing out:", error);
     });
   };
+  // const logout = () => {
+  //   signOut(auth).then(() => {
+  //     console.log("User signed out");
+  //   }).catch((error) => {
+  //     console.error("Error signing out: ", error);
+  //   });
+  // }
   
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const db = getFirestore();
