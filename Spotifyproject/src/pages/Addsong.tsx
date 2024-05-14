@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonMenuButton, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
+import { collection, addDoc, getFirestore, getDocs, serverTimestamp } from "firebase/firestore"; // Import serverTimestamp
 import { useHistory } from 'react-router';
 import "../firebaseConfig";
 
@@ -36,6 +36,7 @@ const Addsong: React.FC = () => {
                 namaartist: selectedArtist,
                 fotoUrl: urlFoto,
                 laguUrl: urlLagu,
+                timestamp: serverTimestamp()
             });
             console.log("Song added successfully");
             history.push('/admin');
