@@ -13,7 +13,7 @@ const PlaylistDetail1:React.FC = () =>{
         { id: 6, username: 'abc', testimonial: 'dwedo' },
     ];
 
-    const [playlistName, setPlaylistName] = useState<string>('Playlist 1');
+    const [playlistName, setPlaylistName] = useState<string>('Playlist Name');
     const [takenPhoto, setTakenPhoto] = useState<{
         path: string | undefined,
         preview: string
@@ -46,7 +46,7 @@ const PlaylistDetail1:React.FC = () =>{
                             <IonBackButton defaultHref='/YourLibrary' />
                         </IonButtons>
                         <IonTitle>
-                            Playlist 1
+                            <IonInput value={playlistName} onIonChange={e => setPlaylistName(e.detail.value!)} />
                         </IonTitle>
                         <IonButtons slot='end'>
                             <IonIcon icon={add} size='large' />
@@ -68,9 +68,6 @@ const PlaylistDetail1:React.FC = () =>{
                                             <IonIcon slot="start" icon={camera} />
                                             <IonLabel>Take Photo</IonLabel>
                                         </IonButton>
-                                            <br />
-                                            <IonInput value={playlistName} onIonChange={e => setPlaylistName(e.detail.value!)} />
-                                            <br />
                                             <IonList>
                                                 {data.map((user) => (
                                                     <>
