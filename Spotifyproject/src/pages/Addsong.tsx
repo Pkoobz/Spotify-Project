@@ -1,20 +1,19 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonMenuButton, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react';
-import react, { useEffect, useRef, useState } from 'react';
-import "../firebaseConfig";
-import { collection, addDoc, getFirestore, getDocs, doc} from "firebase/firestore";
+import React, { useEffect, useRef, useState } from 'react';
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { useHistory } from 'react-router';
+import "../firebaseConfig";
 
-const Addsong:React.FC = () => {
+const Addsong: React.FC = () => {
     const history = useHistory();
     const namalagu = useRef<HTMLIonInputElement>(null);
-    const [fileName0,setFilename0] = useState('');
-    const [fileName1,setFilename1] = useState('');
+    const [fileName0, setFilename0] = useState('');
+    const [fileName1, setFilename1] = useState('');
     const [selectedFile0, setSelectedFile0] = useState<File>();
     const [selectedFile1, setSelectedFile1] = useState<File>();
-    const [selectedArtist, setSelectedArtist] = useState<string>(''); // State to hold the selected artist
+    const [selectedArtist, setSelectedArtist] = useState<string>('');
     const storage = getStorage();
-    console.log(storage)
     const db = getFirestore();
     const [artists, setArtists] = useState<Array<any>>([]);
 
@@ -30,15 +29,13 @@ const Addsong:React.FC = () => {
         getData();
     }, [db]);
 
-    const addLagu = async(url: string) => {
+    const addLagu = async (urlFoto: string, urlLagu: string) => {
         try {
             await addDoc(collection(db, "lagu"), {
                 namalagu: namalagu.current?.value,
-                namaartist: selectedArtist, // Use selected artist's name
-                foto0: fileName0,
-                fotoUrl0: url,
-                foto1: fileName1,
-                fotoUrl1: url,
+                namaartist: selectedArtist,
+                fotoUrl: urlFoto,
+                laguUrl: urlLagu,
             });
             console.log("Song added successfully");
             history.push('/admin');
@@ -57,7 +54,7 @@ const Addsong:React.FC = () => {
         setFilename1(event.target.files![0].name);
     };
 
-    const insertHandler0 = async() => {
+    const insertHandler0 = async () => {
         if (selectedFile0 && selectedFile1 && selectedArtist) {
             const storageRef0 = ref(storage, fileName0);
             const storageRef1 = ref(storage, fileName1);
@@ -66,10 +63,11 @@ const Addsong:React.FC = () => {
                 uploadBytes(storageRef1, selectedFile1)
             ]).then(() => {
                 console.log('upload files success');
-                getDownloadURL(storageRef0).then((url) =>{
-                    addLagu(url);
-                    
-            history.push('/admin');
+                Promise.all([
+                    getDownloadURL(storageRef0),
+                    getDownloadURL(storageRef1)
+                ]).then(([urlFoto, urlLagu]) => {
+                    addLagu(urlFoto, urlLagu);
                 }).catch((error) => {
                     console.error("Error getting download URL: ", error);
                 });
@@ -79,7 +77,7 @@ const Addsong:React.FC = () => {
         }
     };
 
-    return(
+    return (
         <>
             <IonPage>
                 <IonHeader>
@@ -111,12 +109,12 @@ const Addsong:React.FC = () => {
                                                     </IonSelect>
                                                 </IonItem>
                                                 <IonItem>
-                                                    <IonLabel>Masukkan file lagu</IonLabel>
-                                                    <input type="file" onChange={fileLaguChangeHandler}/>
+                                                    <IonLabel>Masukkan lagunya</IonLabel>
+                                                    <input type="file" accept=".mp4" onChange={fileLaguChangeHandler} />
                                                 </IonItem>
                                                 <IonItem>
                                                     <IonLabel>Masukkan foto lagu</IonLabel>
-                                                    <input type="file" onChange={fileChangeHandler}/>
+                                                    <input type="file" onChange={fileChangeHandler} />
                                                 </IonItem>
                                             </IonItemGroup>
                                         </IonCol>
@@ -135,4 +133,5 @@ const Addsong:React.FC = () => {
         </>
     )
 };
+
 export default Addsong;
