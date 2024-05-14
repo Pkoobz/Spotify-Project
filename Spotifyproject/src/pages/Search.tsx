@@ -5,41 +5,78 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import './Search.css'
+import { getDocs, collection, getFirestore } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 
 const Tab2: React.FC = () => {
   const data = [
     {
       id:1,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:'Rock',
+      image:'',
+      link:'/genre0'
     },
     {
       id:2,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:'Pop',
+      image:'',
+      link:'/genre1'
     },
     {
       id:3,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:'Jazz',
+      image:'',
+      link:'/genre2'
     },
     {
       id:4,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:'Classical',
+      image:'',
+      link:'/genre3'
     },
     {
       id:5,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:"80's",
+      image:'',
+      link:'/genre4'
     },
     {
       id:6,
-      username:'abc',
-      testimonial:'dwedo'
+      nama:"Hip-Hop",
+      image:'',
+      link:'/genre5'
     },
+    {
+      id:7,
+      nama:"Indie",
+      image:'',
+      link:'/genre6'
+    }
   ]
+  const [artists, setArtists] = useState<Array<any>>([]);
+  const db = getFirestore();
+  const history = useHistory();
+
+  useEffect(() => {
+    const fetchArtists = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "artists"));
+        const artistList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        if (artistList.length > 0) {
+          setArtists(artistList);
+        }
+      } catch (error) {
+        console.error("Error getting artists: ", error);
+      }
+    };
+    fetchArtists();
+  }, [db]);
+
+  
+  const handleCardClick = (link: string) => {
+    history.push(link);
+  };
   return (
     <IonPage>
       <IonHeader>
@@ -71,23 +108,22 @@ const Tab2: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>
-                    <h2 className='h2-genre'>Jelajahi Genre</h2>
+                    <h1>Jelajahi Genre</h1>
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={3}
+                      slidesPerView={2}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
                     >
                       {data.map(user => (
-                        <SwiperSlide key={user.id} className='slide'>
+                        <SwiperSlide key={user.id} className='slide' onClick={() => handleCardClick(user.link)}>
                           <div className='slide-content'>
                             <div className='user-image'>
-                              <img src='../public/favicon.png' className='user-photo' />
+                              <img src={user.image} />
                             </div>
-                            <h5>{user.username}</h5>
-                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                            <h5>{user.nama}</h5>
                           </div>
                         </SwiperSlide>
                       ))}
@@ -96,23 +132,22 @@ const Tab2: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>
-                    <h2 className='h2-genre'>Jelajahi Artis</h2>
+                    <h1>Jelajahi Artis</h1>
                     <br />
                     <Swiper
                       spaceBetween={20}
-                      slidesPerView={3}
+                      slidesPerView={2}
                       scrollbar={{draggable:true}}
                       onSlideChange={() => console.log('slide change')}
                       onSwiper={swiper => console.log(swiper)}
                     >
-                      {data.map(user => (
-                        <SwiperSlide key={user.id} className='slide'>
+                      {artists.slice(0, 8).map(artist => (
+                        <SwiperSlide key={artist.id} className='slide'>
                           <div className='slide-content'>
                             <div className='user-image'>
-                              <img src='../public/favicon.png' className='user-photo' />
+                              <img src={artist.fotoUrl} />
                             </div>
-                            <h5>{user.username}</h5>
-                            <p className='user-testimonials'>"<i>{user.testimonial}</i>"</p>
+                            <h5>{artist.namaartist}</h5>
                           </div>
                         </SwiperSlide>
                       ))}
