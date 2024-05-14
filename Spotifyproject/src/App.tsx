@@ -48,7 +48,7 @@ const App: React.FC = () => {
       console.error("Error signing out:", error);
     });
   };
-  // const logout = () => {
+  // const logout = () => {a
   //   signOut(auth).then(() => {
   //     console.log("User signed out");
   //   }).catch((error) => {

@@ -1,40 +1,42 @@
-import { IonPage, IonHeader, IonContent, IonGrid, IonRow, IonCol, IonButtons, IonBackButton, IonIcon, IonTitle, IonToolbar, IonImg, IonList, IonAvatar, IonItem } from '@ionic/react';
-import { add, addOutline, ellipsisVerticalOutline } from 'ionicons/icons';
-import React from'react';
+import { IonPage, IonHeader, IonContent, IonGrid, IonRow, IonCol, IonButtons, IonBackButton, IonIcon, IonTitle, IonToolbar, IonImg, IonList, IonAvatar, IonItem, IonButton, IonLabel, IonInput } from '@ionic/react';
+import { add, addOutline, camera, ellipsisVerticalOutline } from 'ionicons/icons';
+import React, { useState } from'react';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 const PlaylistDetail1:React.FC = () =>{
     const data = [
-        {
-          id:1,
-          username:'abc',
-          testimonial:'dwedo'
-        },
-        {
-          id:2,
-          username:'abc',
-          testimonial:'dwedo'
-        },
-        {
-          id:3,
-          username:'abc',
-          testimonial:'dwedo'
-        },
-        {
-          id:4,
-          username:'abc',
-          testimonial:'dwedo'
-        },
-        {
-          id:5,
-          username:'abc',
-          testimonial:'dwedo'
-        },
-        {
-          id:6,
-          username:'abc',
-          testimonial:'dwedo'
-        },
+        { id: 1, username: 'abc', testimonial: 'dwedo' },
+        { id: 2, username: 'abc', testimonial: 'dwedo' },
+        { id: 3, username: 'abc', testimonial: 'dwedo' },
+        { id: 4, username: 'abc', testimonial: 'dwedo' },
+        { id: 5, username: 'abc', testimonial: 'dwedo' },
+        { id: 6, username: 'abc', testimonial: 'dwedo' },
     ];
+
+    const [playlistName, setPlaylistName] = useState<string>('Playlist 1');
+    const [takenPhoto, setTakenPhoto] = useState<{
+        path: string | undefined,
+        preview: string
+    }>();
+
+    const takePhotoHandler = async () => {
+        const photo = await Camera.getPhoto({
+            resultType: CameraResultType.Uri,
+            source: CameraSource.Camera,
+            quality: 80,
+            width: 500
+        });
+        console.log(photo);
+
+        if (!photo || !photo.webPath) {
+            return;
+        }
+
+        setTakenPhoto({
+            path: photo.path,
+            preview: photo.webPath
+        });
+    };
     return(
         <>
             <IonPage>
@@ -58,9 +60,16 @@ const PlaylistDetail1:React.FC = () =>{
                                 <IonGrid className='ion-no-padding'>
                                     <IonRow className="ion-text-center">
                                         <IonCol>
-                                            <IonImg src='../public/favicon.png' />
+                                        <div className="image-preview">
+                                            {!takenPhoto && <h3>No photo chosen.</h3>}
+                                            {takenPhoto && <img src={takenPhoto.preview} alt="Preview" />}
+                                        </div>
+                                        <IonButton fill="clear" onClick={takePhotoHandler}>
+                                            <IonIcon slot="start" icon={camera} />
+                                            <IonLabel>Take Photo</IonLabel>
+                                        </IonButton>
                                             <br />
-                                            <IonTitle>Playlist 1</IonTitle>
+                                            <IonInput value={playlistName} onIonChange={e => setPlaylistName(e.detail.value!)} />
                                             <br />
                                             <IonList>
                                                 {data.map((user) => (
