@@ -138,8 +138,10 @@ const Admin: React.FC = () => {
                                                             <td>{lagu.namaartist}</td>
                                                             <td><img src={lagu.fotoUrl} alt={lagu.namalagu} /></td>
                                                             <td>
-                                                                {lagu.laguUrl.endsWith('.mp4') ? (
+                                                                {lagu.laguUrl.endsWith('.mp4,.mp3') ? (
                                                                     <video width="100" controls>
+                                                                        <source src={lagu.laguUrl} type="video/mp3" />
+                                                                        Your browser does not support the video tag.
                                                                         <source src={lagu.laguUrl} type="video/mp4" />
                                                                         Your browser does not support the video tag.
                                                                     </video>
