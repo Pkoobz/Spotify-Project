@@ -2,7 +2,7 @@ import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput
 import react, { useEffect, useRef, useState } from 'react';
 import "../firebaseConfig";
 import bcrypt from 'bcryptjs';
-import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
+import { collection, addDoc, getFirestore, getDocs, serverTimestamp } from "firebase/firestore";
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { useHistory } from 'react-router';
 
@@ -23,7 +23,8 @@ const Addartist:React.FC = () => {
                 const docRef = await addDoc(collection(db, "artists"), {
                     namaartist: namaartist.current?.value,
                     foto: fileName,
-                    fotoUrl: url
+                    fotoUrl: url,
+                    timestamp: serverTimestamp()
                 });
                 console.log("Document written with ID: ", docRef.id);
         } catch (e) {
