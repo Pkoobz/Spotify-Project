@@ -129,6 +129,13 @@ const App: React.FC = () => {
           <Route exact path="/tab2" component={Tab2} />
           <Route exact path="/registration" component={Registration} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/genre0" component={Genre0} />
+          <Route exact path="/genre1" component={Genre1} />
+          <Route exact path="/genre2" component={Genre2} />
+          <Route exact path="/genre3" component={Genre3} />
+          <Route exact path="/genre4" component={Genre4} />
+          <Route exact path="/genre5" component={Genre5} />
+          <Route exact path="/genre6" component={Genre6} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/lupa" component={Lupapassword} />
           <Route exact path="/lupa1" component={Lupapassword1} />
