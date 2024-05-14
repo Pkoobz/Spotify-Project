@@ -110,7 +110,7 @@ const Addsong: React.FC = () => {
                                                 </IonItem>
                                                 <IonItem>
                                                     <IonLabel>Masukkan lagunya</IonLabel>
-                                                    <input type="file" accept=".mp4" onChange={fileLaguChangeHandler} />
+                                                    <input type="file" accept=".mp4, .mp3" onChange={fileLaguChangeHandler} />
                                                 </IonItem>
                                                 <IonItem>
                                                     <IonLabel>Masukkan foto lagu</IonLabel>
