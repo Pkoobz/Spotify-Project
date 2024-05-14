@@ -1,17 +1,16 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import react, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../firebaseConfig";
-import bcrypt from 'bcryptjs';
-import { collection, addDoc, getFirestore, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { collection, getFirestore, getDocs, deleteDoc, doc } from "firebase/firestore";
 
-const Admin:React.FC = () => {
+const Admin: React.FC = () => {
     const db = getFirestore();
     const [artists, setArtists] = useState<Array<any>>([]);
     const [lagus, setLagu] = useState<Array<any>>([]);
+    const [albums, setAlbum] = useState<Array<any>>([]);
 
     useEffect(() => {
-        async function getData() {
+        async function fetchArtists() {
             try {
                 const querySnapshot = await getDocs(collection(db, "artists"));
                 setArtists(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
@@ -19,11 +18,11 @@ const Admin:React.FC = () => {
                 console.error("Error getting documents: ", error);
             }
         }
-        getData();
+        fetchArtists();
     }, [db]);
 
     useEffect(() => {
-        async function getData() {
+        async function fetchLagus() {
             try {
                 const querySnapshot0 = await getDocs(collection(db, "lagu"));
                 setLagu(querySnapshot0.docs.map(doc => ({ ...doc.data(), id: doc.id })));
@@ -31,7 +30,19 @@ const Admin:React.FC = () => {
                 console.error("Error getting documents: ", error);
             }
         }
-        getData();
+        fetchLagus();
+    }, [db]);
+
+    useEffect(() => {
+        async function fetchAlbums() {
+            try {
+                const querySnapshot1 = await getDocs(collection(db, "album"));
+                setAlbum(querySnapshot1.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+            }
+        }
+        fetchAlbums();
     }, [db]);
 
     async function deleteArtist(artistId: string) {
@@ -52,7 +63,16 @@ const Admin:React.FC = () => {
         }
     }
 
-    return(
+    async function deleteAlbum(albumId: string) {
+        try {
+            await deleteDoc(doc(db, "album", albumId));
+            setAlbum(albums.filter(album => album.id !== albumId));
+        } catch (error) {
+            console.error("Error removing document: ", error);
+        }
+    }
+
+    return (
         <>
             <IonPage>
                 <IonHeader>
@@ -71,56 +91,103 @@ const Admin:React.FC = () => {
                                     <IonRow>
                                         <IonCol>
                                             <IonButton routerLink='/addartist'>Add Artist</IonButton>
-                                                <table border={1}>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Foto</th>
-                                                            <th>Edit</th>
-                                                            <th>Delete</th>
+                                            <table border={1}>
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Foto</th>
+                                                        <th>Edit</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {artists.map((artist, index) => (
+                                                        <tr key={artist.id}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{artist.namaartist}</td>
+                                                            <td><img src={artist.fotoUrl} alt={artist.namaartist} /></td>
+                                                            <td><IonButton routerLink={`/admin/${artist.id}`}>Edit</IonButton></td>
+                                                            <td><IonButton onClick={() => deleteArtist(artist.id)}>Delete</IonButton></td>
                                                         </tr>
-                                                        {artists.map((artist, index) => (
-                                                            <tr key={artist.id}>
-                                                                <td>{index + 1}</td>
-                                                                <td>{artist.namaartist}</td>
-                                                                <td><img src={artist.fotoUrl}/></td>
-                                                                <td><IonButton routerLink={`/admin/${artist.id}`}>Edit</IonButton></td>
-                                                                <td><IonButton onClick={() => deleteArtist(artist.id)}>Delete</IonButton></td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </IonCol>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol>
                                             <IonButton routerLink='/addsong'>Add Song</IonButton>
-                                                <table border={1}>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Artis</th>
-                                                            <th>Foto</th>
-                                                            <th>Lagu</th>
-                                                            <th>Edit</th>
-                                                            <th>Delete</th>
+                                            <table border={1}>
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Artis</th>
+                                                        <th>Foto</th>
+                                                        <th>Lagu</th>
+                                                        <th>Edit</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {lagus.map((lagu, index) => (
+                                                        <tr key={lagu.id}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{lagu.namalagu}</td>
+                                                            <td>{lagu.namaartist}</td>
+                                                            <td><img src={lagu.fotoUrl} alt={lagu.namalagu} /></td>
+                                                            <td>
+                                                                {lagu.laguUrl.endsWith('.mp4') ? (
+                                                                    <video width="100" controls>
+                                                                        <source src={lagu.laguUrl} type="video/mp4" />
+                                                                        Your browser does not support the video tag.
+                                                                    </video>
+                                                                ) : (
+                                                                    <audio controls>
+                                                                        <source src={lagu.laguUrl} type="audio/mpeg" />
+                                                                        Your browser does not support the audio element.
+                                                                    </audio>
+                                                                )}
+                                                            </td>
+                                                            <td><IonButton routerLink={`/admin/${lagu.id}`}>Edit</IonButton></td>
+                                                            <td><IonButton onClick={() => deleteLagu(lagu.id)}>Delete</IonButton></td>
                                                         </tr>
-                                                        {lagus.map((lagu, index) => (
-                                                            <tr key={lagu.id}>
-                                                                <td>{index + 1}</td>
-                                                                <td>{lagu.namalagu}</td>
-                                                                <td>{lagu.namaartist}</td>
-                                                                <td><img src={lagu.fotoUrl0} /></td>
-                                                                <td><img src={lagu.fotoUrl1}/></td>
-                                                                <td><IonButton routerLink={`/admin/${lagu.id}`}>Edit</IonButton></td>
-                                                                <td><IonButton onClick={() => deleteLagu(lagu.id)}>Delete</IonButton></td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </IonCol>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </IonCol>
+                                    </IonRow>
+                                    <IonRow>
+                                        <IonCol>
+                                            <IonButton routerLink='/addalbum'>Add Album</IonButton>
+                                            <table border={1}>
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Artis</th>
+                                                        <th>Foto</th>
+                                                        <th>Lagu</th>
+                                                        <th>Edit</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {albums.map((album, index) => (
+                                                        <tr key={album.id}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{album.namaalbum}</td>
+                                                            <td>{album.namaartist}</td>
+                                                            <td><img src={album.fotoUrl2} alt={album.namaalbum} /></td>
+                                                            <td><img src={album.fotoUrl3} alt={album.namaalbum} /></td>
+                                                            <td><IonButton routerLink={`/admin/${album.id}`}>Edit</IonButton></td>
+                                                            <td><IonButton onClick={() => deleteAlbum(album.id)}>Delete</IonButton></td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </IonCol>
                                     </IonRow>
                                 </IonGrid>
                             </IonCol>
@@ -129,6 +196,7 @@ const Admin:React.FC = () => {
                 </IonContent>
             </IonPage>
         </>
-    )
+    );
 };
+
 export default Admin;
