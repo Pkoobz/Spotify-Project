@@ -9,6 +9,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { cameraOutline } from 'ionicons/icons';
 import { collection, getDocs, getFirestore, query, orderBy } from 'firebase/firestore';
+import { useLocation } from 'react-router-dom';
 
 const Tab1: React.FC = () => {
   const [artists, setArtists] = useState<Array<any>>([]);
@@ -16,6 +17,8 @@ const Tab1: React.FC = () => {
   const [newSongs, setNewSongs] = useState<Array<any>>([]);
   const [newArtists, setNewArtists] = useState<Array<any>>([]);
 
+  const location = useLocation();
+  const profilePic = (location.state as any).profilePic;
   const db = getFirestore();
 
   useEffect(() => {
@@ -109,7 +112,7 @@ const Tab1: React.FC = () => {
                 <IonRow>
                   <IonCol>
                     <IonAvatar>
-                      <img alt="abc" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                    <img src={profilePic} alt="Profile" />
                     </IonAvatar>
                   </IonCol>
                 </IonRow>

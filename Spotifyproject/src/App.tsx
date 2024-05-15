@@ -34,6 +34,13 @@ import { useState, useEffect } from 'react';
 import { collection,getFirestore, getDocs } from 'firebase/firestore';
 import Addartist from './pages/Addartist';
 import PlayMusic2 from './pages/PlayMusic2';
+import Genre0 from './pages/Genre0';
+import Genre1 from './pages/Genre1';
+import Genre2 from './pages/Genre2';
+import Genre3 from './pages/Genre3';
+import Genre4 from './pages/Genre4';
+import Genre5 from './pages/Genre5';
+import Genre6 from './pages/Genre6';
 
 setupIonicReact();
 

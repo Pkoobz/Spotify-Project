@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemGroup, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { logoGoogle, logoTwitter, logoYahoo } from 'ionicons/icons';
 import { useRef, useState } from 'react';
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
   const provider = new GoogleAuthProvider();
   const provider0 = new OAuthProvider('yahoo.com');
   const provider1 = new TwitterAuthProvider();
-    
+  const [profilePic, setProfilePic] = useState<string | null>(null);
   const auth = getAuth();
 
   const onLogin = (e: { preventDefault: () => void; }) => {
@@ -32,12 +32,14 @@ const Login: React.FC = () => {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage)
       });
-  }  
+  }
+
   const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
+  signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      history.push('/tab1');
+      setProfilePic(user.photoURL);
+      history.push('/tab1', { profilePic: user.photoURL });
       console.log(user);
     }).catch((error) => {
       const errorCode = error.code;
@@ -110,14 +112,12 @@ const Login: React.FC = () => {
           <IonRow className="ion-text-center">
             <IonCol className='colbutton'>
 
-                <IonButton className='button1' onClick={signInWithGoogle}><IonIcon icon={logoGoogle} />Sign in with Google</IonButton>
+                <IonButton className='button1' onClick={signInWithGoogle}><IonIcon icon={logoGoogle} />Sign in with Google</IonButton> 
                 <IonButton className='button2' onClick={signInWithTwitter}><IonIcon icon={logoTwitter} />Sign in with Twitter</IonButton>
                 <IonButton className='button3' onClick={signInWithYahoo}><IonIcon icon={logoYahoo}/>Sign in with Yahoo</IonButton>
                 <IonButton className='button4' routerLink='/lupa'>Lupa Password ?</IonButton>
             </IonCol>
           </IonRow>
-          
-
       </IonContent>
     </IonPage>
   );
