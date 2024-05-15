@@ -1,5 +1,5 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonMenuButton, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
-import { cameraOutline } from 'ionicons/icons';
+import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonMenuButton, IonPage, IonPopover, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
+import { cameraOutline, ellipsisVerticalOutline, heartOutline, newspaperOutline } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -193,6 +193,20 @@ const Tab2: React.FC = () => {
                                   <img src={artist.fotoUrl} alt={artist.namaartist} />
                                 </div>
                                 <h5>{artist.namaartist}</h5>
+                            <IonButtons slot='start'>
+                              <IonButton><IonIcon icon={heartOutline}/></IonButton>
+                            </IonButtons>
+                            <IonButtons slot='end'>
+                              <IonButton id="vu" ><IonIcon icon={ellipsisVerticalOutline}/></IonButton>
+                              <IonPopover trigger="vu" triggerAction="click">
+                                <IonContent class="ion-padding">
+                                  <IonItem button={true} routerLink={`/artist/${artist.namaartist}`}>
+                                    <IonIcon icon={newspaperOutline} />
+                                    <IonLabel>Selengkapnya</IonLabel>
+                                  </IonItem>
+                                </IonContent>
+                              </IonPopover>
+                            </IonButtons>
                               </div>
                             </SwiperSlide>
                           ))}
