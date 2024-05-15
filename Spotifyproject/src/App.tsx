@@ -41,6 +41,7 @@ import Genre3 from './pages/Genre3';
 import Genre4 from './pages/Genre4';
 import Genre5 from './pages/Genre5';
 import Genre6 from './pages/Genre6';
+import artistDetail from './pages/artistDetail';
 
 setupIonicReact();
 
@@ -144,6 +145,7 @@ const App: React.FC = () => {
           <Route exact path="/genre5" component={Genre5} />
           <Route exact path="/genre6" component={Genre6} />
           <Route exact path="/admin" component={Admin} />
+          <Route exact path="/artist/:artistNamaartist" component={artistDetail} />
           <Route exact path="/lupa" component={Lupapassword} />
           <Route exact path="/lupa1" component={Lupapassword1} />
           <Route exact path="/YourLibrary" component={YourLibrary} />
