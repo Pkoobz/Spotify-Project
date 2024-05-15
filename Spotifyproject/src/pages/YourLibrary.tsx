@@ -1,5 +1,5 @@
 import { IonAlert, IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCheckbox, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonItemGroup, IonLabel, IonList, IonMenuButton, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
-import { search, add, ellipsisVerticalCircle, ellipsisVerticalOutline } from 'ionicons/icons';
+import { search, add, ellipsisVerticalCircle, ellipsisVerticalOutline, camera } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,9 +7,48 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import './YourLibrary.css'
+import { collection, addDoc, getFirestore, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 const Tab3: React.FC = () => {
+  const db = getFirestore();
+  const [artists, setArtists] = useState<Array<any>>([]);
+
+  const [takenPhoto, setTakenPhoto] = useState<{
+    path: string | undefined,
+    preview: string
+}>();
+
+const takePhotoHandler = async () => {
+    const photo = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera,
+        quality: 80,
+        width: 500
+    });
+    console.log(photo);
+
+    if (!photo || !photo.webPath) {
+        return;
+    }
+
+    setTakenPhoto({
+        path: photo.path,
+        preview: photo.webPath
+    });
+};
+  useEffect(() => {
+      async function getData() {
+          try {
+              const querySnapshot = await getDocs(collection(db, "artists"));
+              setArtists(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+          } catch (error) {
+              console.error("Error getting documents: ", error);
+          }
+      }
+      getData();
+  }, [db]);
   const [selectedSegment, setSelectedSegment] = useState<string>('playlists');
   const [modalLabel, setModalLabel] = useState<string>('Buat nama playlist baru');
   const playlists = [
@@ -154,18 +193,18 @@ const Tab3: React.FC = () => {
           </IonToolbar>
           <IonRow>
             <IonCol>
-              {data.map((user) => (
-                <>
-                <IonItem className='artist-list-item'>
-                  <IonButtons slot='start'>
-                    <IonAvatar className='size-avatar'>
-                      <IonImg src='../public/favicon.png' />
-                    </IonAvatar>
-                  </IonButtons>
-                  <IonTitle className='title-artist-segment'>{user.username}</IonTitle>
-                </IonItem>
-                </>
-              ))}
+              <IonList>
+                {artists.map((artist, index) => (
+                  <IonItem key={index + 1} className='ion-padding'>
+                    <IonButtons slot='start'>
+                      <IonAvatar>
+                        <IonImg src={artist.fotoUrl} />
+                      </IonAvatar>
+                    </IonButtons>
+                    <IonTitle>{artist.namaartist}</IonTitle>
+                  </IonItem>
+                ))}
+              </IonList>
             </IonCol>
           </IonRow>
         </>
@@ -185,6 +224,18 @@ const Tab3: React.FC = () => {
               <IonTitle slot="end">View</IonTitle>
               <IonToggle slot="end" onIonChange={(e) => console.log('View changed', e.detail.checked)} />
             </IonToolbar>
+            <IonRow className="ion-text-center">
+              <IonCol>
+                <div className="image-preview">
+                  {!takenPhoto && <h3>No photo chosen.</h3>}
+                  {takenPhoto && <img src={takenPhoto.preview} alt="Preview" />}
+                </div>
+                <IonButton fill="clear" onClick={takePhotoHandler}>
+                  <IonIcon slot="start" icon={camera} />
+                  <IonLabel>Take Photo</IonLabel>
+                </IonButton>
+              </IonCol>
+            </IonRow>
             <IonList>
               {playlists.map((playlist) => (
                 <>
