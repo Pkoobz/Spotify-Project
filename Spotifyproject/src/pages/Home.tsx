@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonMenuButton, IonPage, IonPopover, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -7,16 +7,17 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
-import { cameraOutline } from 'ionicons/icons';
+import { cameraOutline, ellipsisVerticalCircleOutline, ellipsisVerticalOutline, heartOutline,newspaperOutline} from 'ionicons/icons';
 import { collection, getDocs, getFirestore, query, orderBy } from 'firebase/firestore';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Tab1: React.FC = () => {
   const [artists, setArtists] = useState<Array<any>>([]);
   const [lagus, setLagu] = useState<Array<any>>([]);
   const [newSongs, setNewSongs] = useState<Array<any>>([]);
   const [newArtists, setNewArtists] = useState<Array<any>>([]);
-
+  
+  const history = useHistory();
   // const location = useLocation();
   // const profilePic = (location.state as any).profilePic;
   const db = getFirestore();
@@ -93,7 +94,7 @@ const Tab1: React.FC = () => {
   function shuffleArray(array: any[]) {
     return array.sort(() => Math.random() - 0.5);
   }
-
+  
   return (
     <IonPage>
       <IonHeader>
@@ -230,12 +231,26 @@ const Tab1: React.FC = () => {
                       onSwiper={swiper => console.log(swiper)}
                     >
                       {newArtists.slice(0, 5).map(artist => (
-                        <SwiperSlide key={artist.id} className='slide'>
+                        <SwiperSlide key={artist.id} className='slide' >
                           <div className='slide-content'>
                             <div className='user-image'>
                               <img src={artist.fotoUrl} />
                             </div>
                             <h5>{artist.namaartist}</h5>
+                            <IonButtons slot='start'>
+                              <IonButton><IonIcon icon={heartOutline}/></IonButton>
+                            </IonButtons>
+                            <IonButtons slot='end'>
+                              <IonButton id="v" ><IonIcon icon={ellipsisVerticalOutline}/></IonButton>
+                              <IonPopover trigger="v" triggerAction="click">
+                                <IonContent class="ion-padding">
+                                  <IonItem button={true} routerLink={`/artist/${artist.namaartist}`}>
+                                    <IonIcon icon={newspaperOutline} />
+                                    <IonLabel>Selengkapnya</IonLabel>
+                                  </IonItem>
+                                </IonContent>
+                              </IonPopover>
+                            </IonButtons>
                           </div>
                         </SwiperSlide>
                       ))}
