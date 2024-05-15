@@ -17,8 +17,8 @@ const Tab1: React.FC = () => {
   const [newSongs, setNewSongs] = useState<Array<any>>([]);
   const [newArtists, setNewArtists] = useState<Array<any>>([]);
 
-  const location = useLocation();
-  const profilePic = (location.state as any).profilePic;
+  // const location = useLocation();
+  // const profilePic = (location.state as any).profilePic;
   const db = getFirestore();
 
   useEffect(() => {
@@ -112,7 +112,8 @@ const Tab1: React.FC = () => {
                 <IonRow>
                   <IonCol>
                     <IonAvatar>
-                    <img src={profilePic} alt="Profile" />
+                    {/* <img src={profilePic} alt="Profile" /> */}
+                    <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Profile" />
                     </IonAvatar>
                   </IonCol>
                 </IonRow>
