@@ -1,44 +1,67 @@
 import { IonPage, IonHeader, IonContent, IonBackButton, IonToolbar, IonTitle, IonCol, IonGrid, IonRow, IonItem, IonLabel, IonInput, IonButton, IonButtons, IonImg, IonAvatar, IonList, IonIcon } from '@ionic/react';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { playBackCircleOutline, playCircleOutline } from 'ionicons/icons';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+interface ArtistProps {
+  id: string;
+  name: string;
+  photoURL: string;
+}
+
 const ArtistDetail: React.FC = () => {
+  const artistID = useParams<{artistId: string}>().artistId;
   const db = getFirestore();
-  const [artists, setArtists] = useState<Array<any>>([]);
-  const [lagus, setLagu] = useState<Array<any>>([]);
-  const { artistNamaartist } = useParams<{ artistNamaartist: string }>();
+  const [artist, setArtist] = useState<ArtistProps | null>({
+    id: "",
+    name: "",
+    photoURL: "",
+});
+  const [song, setSong] = useState<Array<any>>([]);
+
+  async function fetchArtists() {
+    try {
+      const artistCollectionRef = collection(db, "artist");
+      const snapshot = await getDocs(query(artistCollectionRef));
+      snapshot.docs.forEach(doc => {
+        if(doc.id == artistID) {
+          const currArtist = {
+            id: doc.id,
+            name: doc.data().name,
+            photoURL: doc.data().photoURL,
+          } as ArtistProps;
+          setArtist(currArtist)
+        }
+      })
+    } catch (error) {
+        console.error("Error getting documents: ", error);
+    }
+  }
+
+  async function fetchLagus() {
+    try {
+      const songCollectionRef = collection(db, "song");
+      const snapshot = await getDocs(query(songCollectionRef, where("artistId", "==", artistID)));
+      setSong(snapshot.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name,
+          albumId: doc.data().albumId,
+          album: doc.data().album,
+          artistId: doc.data().artistId,
+          artist: doc.data().artist,
+          songURL: doc.data().songURL,
+          photoURL: doc.data().photoURL,
+      })));
+    } catch (error) {
+      console.error("Error getting documents: ", error);
+    }
+  }
 
   useEffect(() => {
-    async function fetchArtists() {
-      try {
-        const querySnapshot = await getDocs(collection(db, "artists"));
-        setArtists(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-      } catch (error) {
-        console.error("Error getting documents: ", error);
-      }
-    }
     fetchArtists();
+    fetchLagus();
   }, [db]);
-
-  
-  const filteredArtist = artists.find(artist => artist.namaartist === artistNamaartist);
-  useEffect(() => {
-    async function fetchLagus() {
-      try {
-        const laguQuerySnapshot = await getDocs(collection(db, "lagu"));
-        const laguData = laguQuerySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        const filteredLagus = laguData.filter(lagu => lagu.namaartist === filteredArtist?.namaartist);
-        setLagu(filteredLagus);
-      } catch (error) {
-        console.error("Error getting documents: ", error);
-      }
-    }
-    if (filteredArtist) {
-      fetchLagus();
-    }
-  }, [db, filteredArtist]);
 
   return (
     <>
@@ -58,22 +81,24 @@ const ArtistDetail: React.FC = () => {
                 <IonGrid className='ion-no-padding'>
                   <IonRow className='ion-text-center'>
                     <IonCol>
-                      {filteredArtist && (
+                      {artist && (
                         <>
-                          <IonAvatar>
-                            <IonImg src={filteredArtist.fotoUrl} />
-                          </IonAvatar>
-                          <h2>{filteredArtist.namaartist}</h2>
-                          {lagus.map((lagu, index) => (
+                          <div style={{display: 'flex'}}>
+                            <IonAvatar>
+                              <IonImg src={artist.photoURL} />
+                            </IonAvatar>
+                            <h2 style={{margin: 'auto'}}>{artist.name}</h2>
+                          </div>
+                          {song.map((lagu, index) => (
                             <IonList key={index + 1}>
-                              <IonItem className='ion-padding'>
+                              <IonItem className='ion-padding' routerLink={`/play/${lagu.id}`}>
                                 <IonButtons slot='start'>
                                   <IonAvatar>
-                                    <IonImg src={lagu.fotoUrl} />
+                                    <IonImg src={lagu.photoURL} />
                                   </IonAvatar>
                                 </IonButtons>
                                 <IonLabel>
-                                  <h1>{lagu.namalagu}</h1>
+                                  <h1>{lagu.name}</h1>
                                   <h4>{lagu.genre}</h4>  
                                 </IonLabel>
                                 <IonButtons slot='end'>

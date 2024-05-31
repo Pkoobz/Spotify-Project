@@ -1,22 +1,86 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemGroup, IonLabel, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import react, { useEffect, useRef, useState } from 'react';
+import react, { useEffect, useRef, useState, useContext } from 'react';
 import "../firebaseConfig";
 import bcrypt from 'bcryptjs';
-import { collection, addDoc, getFirestore, getDocs, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, getFirestore, getDocs, serverTimestamp, query, where, Timestamp } from "firebase/firestore";
 import { getStorage, uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { useHistory } from 'react-router';
+import { Directory, Filesystem } from "@capacitor/filesystem";
+import { AuthContext } from "../context/ContextProvider";
+import { AuthContextType } from "../context/ContextProvider";
+
+interface ArtistProps {
+    name: string;
+    photoURL: string;
+}
 
 const Addartist:React.FC = () => {
+    const [artist, setArtist] = useState<ArtistProps | null>({
+        name: "",
+        photoURL: "",
+    });
     const history = useHistory();
     const namaartist = useRef<HTMLIonInputElement>(null);
     const [fileName,setFilename] = useState('');
     const [selectedFile, setSelectedFile] = useState<File>();
     const storage = getStorage();
-    console.log(storage)
+    const authContext = useContext(AuthContext) as AuthContextType;
+    const { auth, setAuth } = authContext;
 
     const db = getFirestore();
-    console.log(db)
-    const [artists,setArtists] = useState<Array<any>>([]);
+
+    const handleInputChange = (ev: Event) => {
+        const { value, name } = ev.target as HTMLInputElement;
+        setArtist((prevArtist) => {
+          if (!prevArtist) {
+            return null;
+          }
+          return {
+            ...prevArtist,
+            [name]: value,
+          };
+        });
+    };
+    
+    const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFile(event.target!.files![0]);
+        setFilename(event.target!.files![0].name);
+    };
+
+    const savePhotoToFirebase = async () => {
+        try {
+          const storageRef = ref(
+            storage,
+            `artist_photo/${artist?.name}/${fileName}`
+          );
+
+          await uploadBytes(storageRef, selectedFile as Blob);
+    
+          return await getDownloadURL(storageRef);
+        } catch (error) {
+          return error;
+        }
+    };
+
+    const handleSaveArtist = async () => {
+        if (artist?.name &&!selectedFile) {
+            return;
+        }
+        try {
+            let downloadURL: string | null = null;
+            downloadURL = (await savePhotoToFirebase()) as string;
+            await addDoc(collection(db, "artist"), {
+                name: artist?.name,
+                photoURL: downloadURL,
+                createdAt: Timestamp.now(),
+            });
+            history.push('/admin');
+        } catch (error) {
+            console.log("GAGAL")
+        } finally {
+            console.log("BERHASIL")
+        }
+    }
 
     const addArtist = async(url: string) => {
         try {
@@ -31,12 +95,6 @@ const Addartist:React.FC = () => {
             console.error("Error adding document: ", e);
         }
     }
-    
-    const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedFile(event.target!.files![0]);
-        setFilename(event.target!.files![0].name);
-    };
-
     const insertHandler0 = async() => {
         const storageRef = ref(storage, fileName);
         
@@ -69,7 +127,7 @@ const Addartist:React.FC = () => {
                                             <IonItemGroup>
                                                 <IonItem>
                                                     <IonLabel>Masukkan nama artist</IonLabel>
-                                                    <IonInput type="text" ref={namaartist} />
+                                                    <IonInput type="text" name='name' onIonInput={handleInputChange} />
                                                 </IonItem>
                                                 <IonItem>
                                                     <input type="file" onChange={fileChangeHandler}/>
@@ -79,7 +137,7 @@ const Addartist:React.FC = () => {
                                     </IonRow>
                                     <IonRow>
                                         <IonCol>
-                                            <IonButton onClick={insertHandler0}>Simpan</IonButton>
+                                            <IonButton onClick={handleSaveArtist}>Simpan</IonButton>
                                         </IonCol>
                                     </IonRow>
                                 </IonGrid>

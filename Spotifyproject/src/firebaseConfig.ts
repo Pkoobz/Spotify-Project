@@ -1,7 +1,25 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";  
-import {connectAuthEmulator,sendPasswordResetEmail,confirmPasswordReset} from 'firebase/auth';
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDocs,
+  updateDoc,
+  query,
+  where,
+  getDoc,
+  orderBy,
+  limit,
+} from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,5 +38,80 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const auth = getAuth(app);
-export default app;
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage();
+
+const getFirebaseErrorMessage = (code: string) => {
+  const errorMessages = {
+    "auth/email-already-in-use": "Email sudah terdaftar.",
+    "auth/invalid-email": "Email tidak valid.",
+    "auth/weak-password": "Kata sandi terlalu lemah.",
+    "auth/invalid-login-credentials": "Email atau password salah.",
+  } as any;
+
+  if (errorMessages.hasOwnProperty(code)) {
+    return errorMessages[code];
+  }
+
+  // Pesan default jika kode error tidak ditemukan
+  return "Terjadi kesalahan pada Firebase.";
+};
+
+const handleAuthError = (err: any) => ({
+  isRegistered: false,
+  error: getFirebaseErrorMessage(err.code),
+});
+
+const logInWithEmailAndPassword = async (email: string, password: string) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const userUid = res.user.uid;
+
+    localStorage.setItem("userUid", userUid);
+
+    return {
+      isLogged: true,
+      data: res,
+    };
+  } catch (err) {
+    return handleAuthError(err);
+  }
+};
+
+const registerWithEmailAndPassword = async (
+  name: string,
+  email: string,
+  password: string,
+) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    const res2 = await addDoc(collection(db, "users"), {
+      uid: user.uid,
+      name,
+      authProvider: "local",
+      email,
+      isAdmin: false,
+      playlist: [],
+      likedAlbum: [],
+      likedArtist: [],
+    });
+    return {
+      isRegistered: true,
+      data: res2,
+    };
+  } catch (err) {
+    return handleAuthError(err);
+  }
+};
+
+export {
+  app,
+  analytics,
+  auth,
+  db,
+  storage,
+  logInWithEmailAndPassword,
+  registerWithEmailAndPassword,
+};
